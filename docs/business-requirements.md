@@ -6127,3 +6127,3777 @@ Future screens should include:
 * Invoice and Receipt Management
 * Finance Staff Configuration Panel
 
+
+---
+
+## 8. Role-Based Access Matrix
+
+This chapter defines the recommended role-based access matrix for Academiya.
+
+The purpose of this chapter is to help developers, Systems Analysts, testers, and administrators understand what each role is allowed to access or perform in the system.
+
+Academiya should use **Role-Based Access Control (RBAC)**. This means a user's access is controlled by their assigned role, permissions, and scope.
+
+For Phase 1, the main access types and roles are:
+
+1. **Public Visitor**
+2. **Registered User / Potential Student**
+3. **Super Admin**
+4. **Admin**
+5. **Instructor**
+
+Future roles may include:
+
+1. **Academy Manager**
+2. **Admission Staff**
+3. **Finance Staff**
+4. **Content Manager**
+5. **Certificate Officer**
+
+---
+
+### 8.1 Access Control Concept
+
+Each user should only be able to access screens, data, and actions allowed by their role and permission scope.
+
+Permission scope defines where the access applies.
+
+Examples of scope:
+
+* **Platform level** - access applies across the entire Academiya platform
+* **Academy level** - access applies only to a specific academy
+* **Program level** - access applies only to a specific program
+* **Course level** - access applies only to a specific course
+* **Subject level** - access applies only to a specific subject
+* **Class level** - access applies only to a specific class or batch
+
+#### Example
+
+Raymond is a **Super Admin**. He may access platform-level data across all academies.
+
+Maria is an **Admin** for **Filipino Skills Academy Dubai**. She can manage users, programs, courses, and classes for that academy only.
+
+Juan is an **Instructor** for **Microsoft Excel for Beginners**. He can view his assigned course and scheduled classes, but he should not manage unrelated courses such as Basic Caregiving.
+
+Ana is a **Registered User / Potential Student**. She can browse visible programs, courses, and classes, but she cannot create programs or assign roles.
+
+---
+
+### 8.2 Permission Action Types
+
+Academiya should support different permission action types.
+
+Recommended permission actions include:
+
+| Permission Action | Meaning                                       | Example                                             |
+| ----------------- | --------------------------------------------- | --------------------------------------------------- |
+| View              | User can see data or page                     | Instructor can view assigned class                  |
+| Create            | User can create a new record                  | Admin can create a course                           |
+| Update            | User can edit an existing record              | Admin can update class schedule                     |
+| Delete            | User can delete a record, if allowed          | Super Admin may delete test data, if permitted      |
+| Archive           | User can archive a record instead of deleting | Admin can archive an old course                     |
+| Assign            | User can assign users or roles                | Admin can assign Instructor role                    |
+| Activate          | User can activate records or accounts         | Super Admin can activate an academy                 |
+| Deactivate        | User can deactivate records or accounts       | Admin can deactivate a user account                 |
+| Approve           | User can approve a request                    | Future Admission Staff can approve application      |
+| Upload            | User can upload files                         | Future Content Manager can upload PDF materials     |
+| Download          | User can download files or documents          | Student can download certificate in future phase    |
+| Generate          | User can generate system output               | Future Certificate Officer can generate certificate |
+| Export            | User can export reports                       | Admin can export class report, if enabled           |
+| Reverse           | User can reverse a transaction                | Future Finance Staff can reverse payment            |
+
+---
+
+### 8.3 Phase 1 Role Summary
+
+The Phase 1 role access should be summarized as follows:
+
+| Role / Access Type                  | Main Purpose                                                       |
+| ----------------------------------- | ------------------------------------------------------------------ |
+| Public Visitor                      | Can access public pages such as landing, login, and registration   |
+| Registered User / Potential Student | Can browse visible programs, courses, and classes                  |
+| Super Admin                         | Manages platform-level setup and access                            |
+| Admin                               | Manages academy-level users, roles, programs, courses, and classes |
+| Instructor                          | Views assigned courses, subjects, and scheduled classes            |
+
+#### Example
+
+Ana is a new user. After email verification, she becomes a Registered User / Potential Student. She can view programs and classes.
+
+Later, Maria assigns Ana as Instructor for Basic English. Ana's access changes, and she can now see the Instructor dashboard.
+
+---
+
+### 8.4 Phase 1 Module Access Matrix
+
+The following table provides the recommended access for Phase 1 modules.
+
+| Module / Feature          |       Public Visitor | Registered User / Potential Student |                   Super Admin |                        Admin |              Instructor |
+| ------------------------- | -------------------: | ----------------------------------: | ----------------------------: | ---------------------------: | ----------------------: |
+| Public Landing Page       |                 View |                                View |                          View |                         View |                    View |
+| Registration              |       Create Account |                        Not Required |                  Not Required |                 Not Required |            Not Required |
+| Email Verification        |     Verify Own Email |                    Verify Own Email |              Verify Own Email |             Verify Own Email |        Verify Own Email |
+| Login                     |                Login |                               Login |                         Login |                        Login |                   Login |
+| Forgot / Reset Password   |          Own Account |                         Own Account |                   Own Account |                  Own Account |             Own Account |
+| Student-Facing Dashboard  |                   No |                                View |                      Optional |                     Optional |                Optional |
+| Super Admin Dashboard     |                   No |                                  No |                          View |                           No |                      No |
+| Admin Dashboard           |                   No |                                  No |                  No / Limited |                         View |                      No |
+| Instructor Dashboard      |                   No |                                  No |                            No |                           No |                    View |
+| User Search               |                   No |                                  No |                 View / Manage | View / Manage within academy |                      No |
+| User Profile View         |                   No |                         Own Profile |                 View / Manage | View / Manage within academy |             Own Profile |
+| Role Assignment           |                   No |                                  No | Assign Admin / Platform Roles |         Assign academy roles |                      No |
+| Program Management        |                   No |                   View visible only |                 View / Manage | View / Manage within academy |      View assigned only |
+| Course Management         |                   No |                   View visible only |                 View / Manage | View / Manage within academy |      View assigned only |
+| Course Prerequisite Setup |                   No |                   View visible only |                 View / Manage |                View / Manage |  View only, if assigned |
+| Subject Setup             |                   No |                   View visible only |                 View / Manage |                View / Manage |      View assigned only |
+| Class Scheduling          |                   No |                   View visible only |                 View / Manage |                View / Manage |      View assigned only |
+| Class Browsing            | No / Public optional |                                View |                          View |                         View | View assigned / visible |
+| Basic Reports             |                   No |                                  No |         View platform reports |         View academy reports | Limited / assigned only |
+| Settings                  |                   No |                Own preferences only |             Platform settings |             Academy settings |    Own preferences only |
+
+---
+
+### 8.5 Public Visitor Access
+
+A **Public Visitor** is a person who has not logged in.
+
+For Phase 1, Public Visitor access should be limited.
+
+#### Allowed Access
+
+Public Visitors may access:
+
+* Public landing page
+* Registration page
+* Login page
+* Forgot password page
+* Email verification page through verification link
+
+#### Not Allowed
+
+Public Visitors should not access:
+
+* Dashboards
+* Program browsing, unless public browsing is enabled
+* Course browsing, unless public browsing is enabled
+* Class browsing, unless public browsing is enabled
+* User management
+* Role assignment
+* Reports
+* Settings
+
+#### Example
+
+Ana opens the Academiya website before registering. She can see the landing page and select **Register**. She cannot access the dashboard until she creates and verifies an account.
+
+---
+
+### 8.6 Registered User / Potential Student Access
+
+A **Registered User / Potential Student** is a verified user who has not been assigned an operational role.
+
+This is the default access type for every newly registered and verified user.
+
+#### Allowed Access
+
+Registered Users / Potential Students may access:
+
+* Own dashboard
+* Own profile
+* Visible programs
+* Visible courses
+* Course details
+* Course prerequisites
+* Classes open for registration
+* Ongoing classes
+* Completed classes
+* Class details
+
+#### Not Allowed
+
+Registered Users / Potential Students should not access:
+
+* User management
+* Role assignment
+* Program creation
+* Course creation
+* Course prerequisite setup
+* Class scheduling setup
+* Admin dashboard
+* Instructor dashboard
+* Reports
+* System settings
+
+#### Example
+
+Ana logs in after verifying her email. She can view:
+
+* Healthcare Program
+* Basic Caregiving
+* Advanced Caregiving
+* Basic Caregiving Batch 2026-A - Open for Registration
+* Basic English Batch 2026-B - Ongoing
+* Microsoft Excel Batch 2025-C - Completed
+
+Ana cannot create a new course or assign herself as Instructor.
+
+---
+
+### 8.7 Super Admin Access
+
+The **Super Admin** manages Academiya at the platform level.
+
+This role has the highest level of access and should be carefully controlled.
+
+#### Allowed Access
+
+Super Admin may access:
+
+* Platform dashboard
+* User management
+* Role assignment
+* Academy management, if included
+* Program management
+* Course management
+* Class scheduling
+* Basic reports
+* Platform settings
+
+#### Typical Actions
+
+Super Admin may be able to:
+
+* View all users
+* Assign Admin users
+* Manage academies, if multi-academy support is included
+* View platform-level reports
+* Manage platform-level settings
+* Activate or deactivate academies, if included
+* Support troubleshooting
+
+#### Example
+
+Raymond is the Super Admin. He creates or activates **Filipino Skills Academy Dubai** and assigns Maria as the Admin for that academy.
+
+Another example:
+
+Raymond views the platform dashboard and sees total users, active courses, and scheduled classes across academies.
+
+---
+
+### 8.8 Admin Access
+
+The **Admin** manages academy-level operations.
+
+Admin access should be limited to the academy assigned to the Admin.
+
+#### Allowed Access
+
+Admin may access:
+
+* Admin dashboard
+* User management within assigned academy
+* Role assignment within assigned academy
+* Program management
+* Course management
+* Course prerequisite setup
+* Subject setup, if included
+* Class scheduling
+* Basic reports
+* Academy-level settings
+
+#### Typical Actions
+
+Admin may be able to:
+
+* Search registered users
+* Assign Instructor role
+* Assign users to academy roles
+* Create programs
+* Create courses
+* Set course prerequisites
+* Create subjects, if included
+* Schedule classes
+* Assign instructors to courses or classes
+* Change class status
+* View academy-level reports
+
+#### Example
+
+Maria is the Admin for **Filipino Skills Academy Dubai**. She creates the **Healthcare Program**, then creates **Basic Caregiving** and **Advanced Caregiving** under that program.
+
+She sets **Basic Caregiving** as a prerequisite for **Advanced Caregiving**.
+
+Another example:
+
+Maria schedules **Basic Caregiving Batch 2026-A** and assigns Liza Santos as the Instructor.
+
+---
+
+### 8.9 Instructor Access
+
+The **Instructor** manages assigned teaching-related activities.
+
+For Phase 1, Instructor access is mostly view-based because attendance, learning materials, exams, and assessments are planned for future phases.
+
+#### Allowed Access
+
+Instructor may access:
+
+* Instructor dashboard
+* Own profile
+* Assigned programs
+* Assigned courses
+* Assigned subjects, if applicable
+* Assigned scheduled classes
+* Class schedule details
+* Class delivery mode and location
+
+#### Not Allowed in Phase 1
+
+Instructor should not access:
+
+* User role assignment
+* Program creation
+* Course creation
+* Course prerequisite setup
+* Class creation, unless specifically permitted
+* Reports unrelated to assigned classes
+* Finance data
+* Platform settings
+
+#### Example
+
+Juan is assigned as Instructor for **Microsoft Excel for Beginners** and **Excel Batch 2026-A**.
+
+Juan can view:
+
+* Course details
+* Class schedule
+* Delivery mode
+* Location
+* Assigned class status
+
+Juan cannot create a new program or assign another user as Instructor.
+
+---
+
+### 8.10 Access Matrix by Permission Action
+
+The following table summarizes recommended Phase 1 permissions by action.
+
+| Feature / Action            | Registered User / Potential Student | Super Admin |        Admin |   Instructor |
+| --------------------------- | ----------------------------------: | ----------: | -----------: | -----------: |
+| View own profile            |                                 Yes |         Yes |          Yes |          Yes |
+| Update own basic profile    |                                 Yes |         Yes |          Yes |          Yes |
+| View visible programs       |                                 Yes |         Yes |          Yes |          Yes |
+| View visible courses        |                                 Yes |         Yes |          Yes |          Yes |
+| View visible classes        |                                 Yes |         Yes |          Yes |          Yes |
+| Create program              |                                  No |         Yes |          Yes |           No |
+| Update program              |                                  No |         Yes |          Yes |           No |
+| Archive program             |                                  No |         Yes |          Yes |           No |
+| Create course               |                                  No |         Yes |          Yes |           No |
+| Update course               |                                  No |         Yes |          Yes |           No |
+| Archive course              |                                  No |         Yes |          Yes |           No |
+| Configure prerequisites     |                                  No |         Yes |          Yes |           No |
+| Create subject              |                                  No |         Yes |          Yes | No / Limited |
+| Assign instructor           |                                  No |         Yes |          Yes |           No |
+| Create class                |                                  No |         Yes |          Yes | No / Limited |
+| Update class                |                                  No |         Yes |          Yes | No / Limited |
+| Cancel class                |                                  No |         Yes |          Yes |           No |
+| View assigned class         |                                  No |         Yes |          Yes |          Yes |
+| Search users                |                                  No |         Yes |          Yes |           No |
+| Assign roles                |                                  No |         Yes | Yes, limited |           No |
+| Activate / deactivate users |                                  No |         Yes | Yes, limited |           No |
+| View reports                |                                  No |         Yes |          Yes |      Limited |
+| Manage settings             |                                  No |         Yes | Yes, limited |           No |
+
+---
+
+### 8.11 Future Role Access Overview
+
+Future roles are not part of the main Phase 1 scope, but the system should be prepared to support them later.
+
+| Future Role         | Main Future Access                                        |
+| ------------------- | --------------------------------------------------------- |
+| Academy Manager     | Dashboards, reports, operational monitoring               |
+| Admission Staff     | Applications, admission review, enrollment processing     |
+| Finance Staff       | Payments, transactions, invoices, receipts, reversals     |
+| Content Manager     | Learning materials, PDFs, videos, links, course resources |
+| Certificate Officer | Certificate eligibility, generation, approval, issuance   |
+
+#### Example
+
+In a future phase, Admission Staff may review Ana's application for **Basic Caregiving Batch 2026-A** and approve her enrollment.
+
+Finance Staff may later check Ana's online payment and issue a receipt.
+
+Content Manager may upload **Basic Caregiving Module 1.pdf**.
+
+Certificate Officer may issue Ana's certificate after she completes the course.
+
+---
+
+### 8.12 Future Module Access Matrix
+
+The following table summarizes planned future module access.
+
+| Future Module           | Registered User / Potential Student |                                   Admin |                          Instructor |               Admission Staff |             Finance Staff |      Content Manager |          Certificate Officer |
+| ----------------------- | ----------------------------------: | --------------------------------------: | ----------------------------------: | ----------------------------: | ------------------------: | -------------------: | ---------------------------: |
+| Admissions & Enrollment |             Apply / View own status |                           Manage / View |              View assigned students |                        Manage | View payment-related only |                   No | View completion-related only |
+| Learning Materials      |    View assigned/enrolled materials |                                  Manage |              Upload / View assigned |                            No |                        No |               Manage |                           No |
+| Attendance              |                 View own attendance |                           View / Manage |    Record assigned class attendance |                            No |                        No |                   No |         View for eligibility |
+| Exams & Assessments     |             Take / View own results |                           View / Manage | Create / Score assigned assessments |                            No |                        No |                   No |         View for eligibility |
+| Certifications          |     View / Download own certificate |                           View / Manage |    View assigned student completion |                            No |                        No |                   No |   Generate / Approve / Issue |
+| Notifications           |                             Receive |                         Create / Manage |        Send class-level, if allowed |        Send admission-related |      Send payment-related | Send content-related |     Send certificate-related |
+| Payments                |             Pay / View own payments | View limited / Manage config if allowed |                                  No | View admission payment status |                    Manage |                   No |                           No |
+| Finance Transactions    |                                  No |                            View limited |                                  No |                            No |                    Manage |                   No |                           No |
+
+---
+
+### 8.13 Data Scope Rules
+
+Role access should not only depend on the role name. It should also depend on data scope.
+
+#### Scope Examples
+
+| User    | Role                                | Scope                         | Allowed Example                       |
+| ------- | ----------------------------------- | ----------------------------- | ------------------------------------- |
+| Raymond | Super Admin                         | Platform                      | Can manage all academies              |
+| Maria   | Admin                               | Filipino Skills Academy Dubai | Can manage only that academy          |
+| Juan    | Instructor                          | Microsoft Excel for Beginners | Can view only assigned course/class   |
+| Ana     | Registered User / Potential Student | Own account                   | Can view visible programs and classes |
+
+#### Example
+
+Maria is Admin for **Filipino Skills Academy Dubai**. She should not be able to update programs for **Filipino Skills Academy Abu Dhabi** unless she is also assigned to that academy.
+
+Juan is Instructor for **Excel Batch 2026-A**. He should not be able to view internal management details for **Basic Caregiving Batch 2026-A** unless assigned.
+
+---
+
+### 8.14 Dashboard Access Rules
+
+Dashboards should change based on the user's current role and permissions.
+
+| User Type                           | Dashboard                          |
+| ----------------------------------- | ---------------------------------- |
+| Registered User / Potential Student | Student-facing discovery dashboard |
+| Super Admin                         | Platform dashboard                 |
+| Admin                               | Academy dashboard                  |
+| Instructor                          | Instructor dashboard               |
+| Future Finance Staff                | Finance dashboard                  |
+| Future Admission Staff              | Admissions dashboard               |
+| Future Certificate Officer          | Certification dashboard            |
+
+#### Example
+
+Ana starts as a Registered User / Potential Student and sees programs, courses, and visible classes.
+
+Maria assigns Ana as Instructor for Basic English. The next time Ana logs in, she sees the Instructor Dashboard instead of the default potential student dashboard.
+
+---
+
+### 8.15 Access Denied Behavior
+
+If a user tries to access a page or action they are not allowed to use, the system should prevent access.
+
+The system should display a clear message.
+
+Recommended message:
+
+**"You do not have permission to access this page or perform this action."**
+
+#### Example
+
+Ana tries to open the Program Create page. Since she is only a Registered User / Potential Student, the system blocks access and displays an access denied message.
+
+Another example:
+
+Juan tries to assign another user as Instructor. Since Juan does not have role assignment permission, the system prevents the action.
+
+---
+
+### 8.16 Audit Requirement for Access Changes
+
+The system should record important access-related changes for audit purposes.
+
+Audit records may include:
+
+* Role assignment
+* Role removal
+* Permission change
+* Account activation
+* Account deactivation
+* User status change
+* Failed login attempts, if implemented
+
+#### Example
+
+Maria assigns Juan as Instructor for Microsoft Excel for Beginners. The system records:
+
+* User affected: Juan Santos
+* Role assigned: Instructor
+* Scope: Microsoft Excel for Beginners
+* Assigned by: Maria Cruz
+* Assigned date and time
+
+Another example:
+
+Maria deactivates a duplicate user account. The system records who deactivated the account and when.
+
+---
+
+### 8.17 Phase 1 Access Control Summary
+
+For Phase 1, Academiya should implement the following access control behavior:
+
+1. **Public Visitors**
+
+   * Can access landing, registration, login, forgot password, and verification screens only.
+
+2. **Registered Users / Potential Students**
+
+   * Can browse visible programs, courses, prerequisites, open classes, ongoing classes, and completed classes.
+
+3. **Super Admin**
+
+   * Can manage platform-level users, roles, academies if included, programs, courses, classes, reports, and settings.
+
+4. **Admin**
+
+   * Can manage users, roles, programs, courses, prerequisites, classes, reports, and settings within the assigned academy.
+
+5. **Instructor**
+
+   * Can view assigned courses, subjects, and scheduled classes.
+
+6. **Future Roles**
+
+   * Should be supported by the permission design even if not fully activated in Phase 1.
+
+7. **Scope Control**
+
+   * Access should be limited by platform, academy, program, course, subject, or class scope.
+
+8. **Dashboard Behavior**
+
+   * The dashboard should change automatically based on the user's assigned role and permissions.
+
+9. **Access Denied**
+
+   * The system should prevent unauthorized access and show a clear message.
+
+10. **Audit Trail**
+
+   * Important access changes should be recorded for security and traceability.
+
+
+---
+
+## 9. Business Rules & Validation Rules
+
+This chapter defines the business rules and validation rules for Academiya.
+
+The purpose of this chapter is to help developers, Systems Analysts, testers, and product owners understand how the system should behave under specific conditions. These rules should be used when designing forms, APIs, workflows, database constraints, automated validations, and test cases.
+
+For **Phase 1**, the rules focus on:
+
+1. User registration and email verification
+2. Login and account access
+3. Default Registered User / Potential Student access
+4. Role assignment and permission control
+5. Program management
+6. Course management
+7. Course prerequisite setup
+8. Class scheduling and class visibility
+9. Dashboard behavior
+10. Reports and settings
+
+Future rules are also included for notifications, announcements, online payments, admissions, attendance, assessments, and certifications, but those future rules are not part of Phase 1 implementation.
+
+---
+
+### 9.1 User Registration Rules
+
+User registration is the first step for all users in Academiya.
+
+All users must register through the same registration process. Users do not register directly as Admin, Instructor, Finance Staff, or other operational roles.
+
+#### Rules
+
+1. The system must allow public users to register using a valid email address and password.
+2. The email address must be unique in the system.
+3. The system must not allow two users to register with the same email address.
+4. The system must generate a unique User ID after successful registration.
+5. The user must agree to the terms and conditions and privacy policy before registration can be completed, if these agreements are included.
+6. The user must verify their email address before accessing the platform.
+7. A newly verified user must be treated as a **Registered User / Potential Student** by default.
+8. A registered user does not automatically become an enrolled student.
+9. A registered user does not automatically become an Instructor, Admin, or staff member.
+10. Mobile verification, SMS OTP, email OTP, social login, and multi-factor authentication are not included in Phase 1.
+
+#### Validation Examples
+
+If Ana registers using `ana@example.com`, the system should accept the registration if that email does not already exist.
+
+If Juan tries to register using `ana@example.com`, the system should reject the registration and display:
+
+**"This email address is already registered. Please log in or use another email address."**
+
+If Ana submits the registration form without agreeing to the terms and conditions, the system should prevent submission and display:
+
+**"Please agree to the terms and conditions before continuing."**
+
+---
+
+### 9.2 Email Verification Rules
+
+For Phase 1, email verification will be done using a **"Verify this email"** link.
+
+#### Rules
+
+1. After registration, the system must send a verification email to the registered email address.
+2. The verification email must contain a clear **"Verify this email"** link.
+3. The user must click the verification link to verify the email address.
+4. The verification link should be secure and should not be reusable after successful verification.
+5. The verification link may expire after a configured period.
+6. If the verification link is expired, the system should allow the user to request a new verification email.
+7. If the verification link is invalid, the system should display a clear error message.
+8. A user with unverified email should not be allowed to access the platform.
+9. A verified email status should be stored in the user record.
+
+#### Validation Examples
+
+Ana clicks a valid verification link. The system marks her email status as **Verified** and allows her to log in.
+
+Rico clicks an expired verification link. The system should display:
+
+**"This verification link has expired. Please request a new verification email."**
+
+Liza tries to log in before verifying her email. The system should prevent login and display:
+
+**"Please verify your email address before logging in."**
+
+---
+
+### 9.3 Login and Account Access Rules
+
+Users must log in before accessing protected pages and features.
+
+For Phase 1, login will use email and password only.
+
+#### Rules
+
+1. Users must log in using their registered email address and password.
+2. The system must validate the email and password.
+3. The system must check whether the email is verified.
+4. The system must check whether the account is active.
+5. The system must check the user's assigned role and permission.
+6. If the user has no assigned operational role, the system must display the Registered User / Potential Student dashboard.
+7. If the user has an assigned role, the system must display the appropriate role-based dashboard.
+8. Users with inactive, suspended, or deactivated accounts must not be allowed to access the platform.
+9. The system should display a generic error message for invalid login credentials.
+10. The system may temporarily lock an account after repeated failed login attempts, if configured.
+
+#### Validation Examples
+
+Ana logs in successfully and has no assigned operational role. The system displays the Registered User / Potential Student dashboard.
+
+Maria logs in successfully and has the Admin role. The system displays the Admin dashboard.
+
+Juan enters the wrong password. The system should display:
+
+**"Invalid email address or password."**
+
+A deactivated user tries to log in. The system should display:
+
+**"Your account is not active. Please contact the administrator."**
+
+---
+
+### 9.4 Default Registered User / Potential Student Rules
+
+Every newly verified user should be treated as a Registered User / Potential Student by default.
+
+This allows the user to browse academy offerings without waiting for Admin role assignment.
+
+#### Rules
+
+1. A verified user without an assigned operational role must receive Registered User / Potential Student access.
+2. A Registered User / Potential Student may browse visible programs.
+3. A Registered User / Potential Student may browse visible courses.
+4. A Registered User / Potential Student may view course prerequisite information.
+5. A Registered User / Potential Student may view classes that are open for registration.
+6. A Registered User / Potential Student may view ongoing classes.
+7. A Registered User / Potential Student may view completed classes.
+8. A Registered User / Potential Student must not access admin screens.
+9. A Registered User / Potential Student must not create, update, or delete programs, courses, prerequisites, or classes.
+10. A Registered User / Potential Student must not assign roles to users.
+
+#### Validation Examples
+
+Ana logs in and sees **Healthcare Program**, **Basic Caregiving**, and **Basic Caregiving Batch 2026-A** because they are active and visible.
+
+Ana should not see the **Create Program** button.
+
+Ana should not be able to open the Role Assignment page.
+
+If Ana tries to access an admin URL directly, the system should display:
+
+**"You do not have permission to access this page or perform this action."**
+
+---
+
+### 9.5 Role Assignment Rules
+
+Role assignment controls what a user can access and do in Academiya.
+
+All users start from the same registration process. Operational roles are assigned later by authorized users.
+
+#### Rules
+
+1. Only authorized users can assign roles.
+2. A Super Admin may assign Admin roles, depending on platform configuration.
+3. An Admin may assign academy-level roles such as Instructor, if permitted.
+4. A user may have no assigned operational role and remain a Registered User / Potential Student.
+5. A user may have one or more role assignments if the system supports multiple roles.
+6. Role assignment should include scope where needed.
+7. Scope may include platform, academy, program, course, subject, or class.
+8. Role assignment should immediately affect the user's dashboard and access permissions.
+9. Deactivated role assignments should no longer grant access.
+10. Role assignment changes should be recorded for audit purposes.
+
+#### Validation Examples
+
+Raymond assigns Maria as Admin for **Filipino Skills Academy Dubai**. Maria can now access the Admin dashboard for that academy.
+
+Maria assigns Juan as Instructor for **Microsoft Excel for Beginners**. Juan can now access the Instructor dashboard and view his assigned course.
+
+Maria should not be able to assign Raymond as Super Admin unless she has that permission.
+
+Juan should not be able to assign roles because Instructor does not have role assignment permission in Phase 1.
+
+---
+
+### 9.6 Permission and Scope Rules
+
+Permission defines what action a user can perform. Scope defines where the permission applies.
+
+#### Rules
+
+1. The system must check both permission and scope before allowing access.
+2. A user with permission in one academy must not automatically access another academy.
+3. A user assigned to one course must not automatically access unrelated courses.
+4. A user assigned to one class must not automatically manage unrelated classes.
+5. If a user has multiple roles, the system must determine access based on allowed role combination rules.
+6. Unauthorized access attempts must be blocked.
+7. Access-denied messages should be clear but should not expose sensitive system details.
+8. Permission and scope changes should be recorded for audit purposes.
+
+#### Validation Examples
+
+Maria is Admin for **Filipino Skills Academy Dubai**. She can create courses for that academy but should not create courses for **Filipino Skills Academy Abu Dhabi** unless assigned.
+
+Juan is Instructor for **Excel Batch 2026-A**. He can view that class but should not update **Basic Caregiving Batch 2026-A**.
+
+Ana is a Registered User / Potential Student. She can view visible programs but cannot update program records.
+
+---
+
+### 9.7 User Account Status Rules
+
+Each user account must have an account status.
+
+#### Recommended Account Statuses
+
+* Pending Verification
+* Active
+* Inactive
+* Suspended
+* Deactivated
+
+#### Rules
+
+1. A newly registered user should start with Pending Verification until email verification is completed.
+2. After successful email verification, the user account should become Active.
+3. Active users may log in and access features based on permission.
+4. Inactive, suspended, or deactivated users must not be allowed to log in.
+5. Account status changes should be recorded for audit purposes.
+6. Deactivating a user should not delete the user's historical records.
+
+#### Validation Examples
+
+Ana registers but has not verified her email. Her account status is **Pending Verification**.
+
+After Ana verifies her email, her account status becomes **Active**.
+
+Maria deactivates a duplicate user account. The user can no longer log in, but the user record remains in the system.
+
+---
+
+### 9.8 Program Management Rules
+
+Programs represent broad learning categories in Academiya.
+
+#### Rules
+
+1. Only authorized users can create programs.
+2. Program name should be required.
+3. Program code should be unique within the academy, if program code is used.
+4. Program status must be selected.
+5. Program visibility must be selected if visibility control is implemented.
+6. Draft programs should not be visible to Registered Users / Potential Students.
+7. Active and visible programs may be shown to Registered Users / Potential Students.
+8. Inactive programs should not be available for new course creation unless allowed by configuration.
+9. Archived programs should remain available for historical reporting but should not be used for new course or class creation.
+10. A program should not be deleted if it already has related courses, classes, or historical records. Archive should be used instead.
+
+#### Validation Examples
+
+Maria creates **Healthcare Program** with status **Active** and visibility **Visible to Registered Users**. Ana can see it.
+
+Maria creates **Hospitality Program** with status **Draft**. Ana should not see it.
+
+Maria tries to archive **Healthcare Program** while it has active courses. The system may allow archive only after related courses are inactive or may display a warning, depending on configured business rules.
+
+---
+
+### 9.9 Course Management Rules
+
+Courses represent specific learning offerings under programs.
+
+#### Rules
+
+1. Only authorized users can create courses.
+2. A course must belong to a program.
+3. Course name should be required.
+4. Course code should be unique within the academy or program, depending on configuration.
+5. Course status must be selected.
+6. Course visibility must be selected if visibility control is implemented.
+7. A course should not be active if its related program is inactive or archived.
+8. Draft courses should not be visible to Registered Users / Potential Students.
+9. Active and visible courses may be shown to Registered Users / Potential Students.
+10. Archived courses should remain available for historical reporting but should not be used for new class scheduling.
+11. Course fee may be optional in Phase 1, but if captured, it should be structured to support future Payment Management.
+12. Course duration should be captured consistently, such as hours, days, weeks, or months.
+
+#### Validation Examples
+
+Maria creates **Basic Caregiving** under **Healthcare Program**. Since Healthcare Program is Active, Basic Caregiving can be activated.
+
+Maria tries to activate **Advanced Caregiving** under an inactive program. The system should prevent activation or display a validation warning.
+
+Ana can view **Basic Caregiving** if it is Active and Visible to Registered Users.
+
+Ana should not see **Food Safety Training** if it is still Draft.
+
+---
+
+### 9.10 Subject Management Rules
+
+Subjects represent specific topics or learning components inside a course.
+
+Subject setup may be included in Phase 1 or prepared for future phases.
+
+#### Rules
+
+1. A subject must belong to a course.
+2. Subject name should be required.
+3. Subject code should be unique within the course, if subject code is used.
+4. Subjects should inherit visibility from the related course unless separate visibility is implemented.
+5. Instructors may be assigned to subjects only if they have the Instructor role.
+6. Inactive subjects should not be assigned to new classes or sessions unless allowed.
+7. Archived subjects should remain available for historical reference but not for new setup.
+
+#### Validation Examples
+
+Maria creates subjects under **Basic Caregiving**:
+
+* Elderly Care
+* First Aid
+* Basic Nursing Skills
+
+Maria assigns Liza Santos as Instructor for **First Aid**. The system should allow this only if Liza has been assigned the Instructor role.
+
+Maria should not assign Ana as subject instructor unless Ana is assigned as Instructor.
+
+---
+
+### 9.11 Course Prerequisite Rules
+
+Course prerequisites define required courses that must be completed before another course can be taken.
+
+For Phase 1, prerequisites can be defined and displayed. Automatic validation during class registration or enrollment is planned for future phases.
+
+#### Rules
+
+1. A course may have no prerequisite.
+2. A course may have one prerequisite.
+3. A course may have multiple prerequisites.
+4. A course must not be set as its own prerequisite.
+5. The system should prevent circular prerequisite relationships where possible.
+6. Prerequisite courses should be active or historically valid courses.
+7. Prerequisite information should be visible in course details when the course is visible.
+8. If a prerequisite course is archived, the system should preserve existing prerequisite records for historical reference.
+9. Future enrollment validation should check whether the student completed or passed the required prerequisite course.
+10. In Phase 1, prerequisite setup should not require student completion records because enrollment and completion modules are not yet implemented.
+
+#### Validation Examples
+
+Valid setup:
+
+**Advanced Caregiving** requires **Basic Caregiving**.
+
+Valid setup:
+
+**Business English** requires both **Basic English** and **Intermediate English**.
+
+Invalid setup:
+
+**Basic Caregiving** requires **Basic Caregiving**. The system should display:
+
+**"A course cannot be its own prerequisite."**
+
+Invalid circular setup:
+
+**Basic Caregiving** requires **Advanced Caregiving**, while **Advanced Caregiving** requires **Basic Caregiving**. The system should prevent this where possible.
+
+---
+
+### 9.12 Class Scheduling Rules
+
+Classes or batches represent scheduled instances of courses.
+
+#### Rules
+
+1. Only authorized users can create classes.
+2. A class must be linked to an active course.
+3. A class should be linked to a program through its course.
+4. Class name should be required.
+5. Class start date should be required.
+6. Class end date should be required.
+7. Class end date must not be earlier than class start date.
+8. Class schedule should be required.
+9. Delivery mode should be required.
+10. If delivery mode is Onsite, location should be required.
+11. If delivery mode is Online, online meeting link or online access information should be provided.
+12. If delivery mode is Hybrid, both location and online access information may be required.
+13. Class capacity should be a positive number if capacity is used.
+14. Assigned Instructor must have Instructor role.
+15. Draft classes should not be visible to Registered Users / Potential Students.
+16. Classes open for registration should be visible to Registered Users / Potential Students.
+17. Ongoing classes should be visible but should not allow registration.
+18. Completed classes should be visible as historical activity, if visibility is enabled.
+19. Cancelled classes should be hidden or shown based on academy preference.
+20. Class changes should be recorded for audit purposes.
+21. Future schedule changes should be able to trigger notifications when Notification Management is implemented.
+
+#### Validation Examples
+
+Maria creates **Basic Caregiving Batch 2026-A** with:
+
+* Start Date: August 1, 2026
+* End Date: September 26, 2026
+* Delivery Mode: Onsite
+* Location: Dubai Campus Room 101
+
+The system accepts the class.
+
+Maria tries to create a class with an end date before the start date. The system should display:
+
+**"Class end date cannot be earlier than class start date."**
+
+Maria assigns Ana as Instructor, but Ana is only a Registered User / Potential Student. The system should prevent this and display:
+
+**"Selected user must be assigned as Instructor before being assigned to a class."**
+
+---
+
+### 9.13 Class Status Rules
+
+Class status controls how a class behaves and whether it is visible to users.
+
+#### Recommended Class Statuses
+
+* Draft
+* Scheduled
+* Open for Registration
+* Ongoing
+* Completed
+* Cancelled
+
+#### Rules
+
+1. Draft classes should be visible only to authorized users.
+2. Scheduled classes may be visible to authorized users and optionally visible to potential students depending on visibility settings.
+3. Open for Registration classes should be visible to Registered Users / Potential Students.
+4. Ongoing classes should be visible to Registered Users / Potential Students but should not allow new registration.
+5. Completed classes should be visible as historical academy activity, if enabled.
+6. Cancelled classes should follow academy visibility settings.
+7. Only authorized users can change class status.
+8. The system should prevent invalid status transitions if configured.
+9. Status history should be recorded for audit purposes.
+
+#### Example Status Transitions
+
+Recommended normal flow:
+
+**Draft -> Scheduled -> Open for Registration -> Ongoing -> Completed**
+
+Alternative flow:
+
+**Draft -> Scheduled -> Cancelled**
+
+#### Validation Examples
+
+Maria changes **Basic Caregiving Batch 2026-A** from Draft to Scheduled after completing the schedule setup.
+
+Maria changes it from Scheduled to Open for Registration when the academy is ready to accept students.
+
+After the start date, Maria changes the class to Ongoing.
+
+When the class ends, Maria changes it to Completed.
+
+---
+
+### 9.14 Program, Course, and Class Visibility Rules
+
+Visibility rules control what Registered Users / Potential Students can see.
+
+#### Rules
+
+1. Draft programs should not be visible to potential students.
+2. Draft courses should not be visible to potential students.
+3. Draft classes should not be visible to potential students.
+4. Active and visible programs may be shown to potential students.
+5. Active and visible courses may be shown to potential students.
+6. Classes open for registration should be shown to potential students.
+7. Ongoing classes should be shown to potential students but should not show registration as available.
+8. Completed classes may be shown to potential students as historical academy activity.
+9. Cancelled classes may be hidden or shown depending on academy preference.
+10. If a program is hidden, its courses should not be visible to potential students.
+11. If a course is hidden, its classes should not be visible to potential students unless explicitly configured otherwise.
+
+#### Validation Examples
+
+Ana can see **Healthcare Program** because it is Active and Visible.
+
+Ana cannot see **Hospitality Program** because it is Draft.
+
+Ana can see **Basic English Batch 2026-B** as Ongoing but should not see a registration button.
+
+Ana can see **Microsoft Excel Batch 2025-C** as Completed to understand academy history.
+
+---
+
+### 9.15 Dashboard Rules
+
+Dashboard content must be role-based and must use real data only.
+
+#### Rules
+
+1. Dashboard content must be based on user role and permission.
+2. Dashboard content must respect data scope.
+3. A Registered User / Potential Student should see the student-facing discovery dashboard.
+4. A Super Admin should see the platform dashboard.
+5. An Admin should see the academy dashboard.
+6. An Instructor should see the instructor dashboard.
+7. Dashboard should display only real data from implemented modules.
+8. Dashboard should not display dummy or placeholder numbers.
+9. Dashboard should not display future-module metrics until the related module is implemented.
+10. If a user's role changes, the dashboard should change accordingly.
+11. Unauthorized dashboard data should be hidden.
+
+#### Validation Examples
+
+Ana sees available programs, visible courses, open classes, ongoing classes, and completed classes.
+
+Maria sees user counts, active programs, active courses, scheduled classes, and users without operational roles for her academy.
+
+Juan sees assigned courses and assigned scheduled classes.
+
+If Payment Management is not implemented, the dashboard should not show fake payment revenue.
+
+If Attendance Management is not implemented, the dashboard should not show fake attendance percentages.
+
+---
+
+### 9.16 Report Rules
+
+Reports should only use real data from available modules.
+
+#### Rules
+
+1. Phase 1 reports should only use Phase 1 data.
+2. Reports should respect user role and scope.
+3. Super Admin may view platform-level reports.
+4. Admin may view academy-level reports.
+5. Instructor may only view limited reports related to assigned courses or classes, if enabled.
+6. Registered Users / Potential Students should not access admin reports.
+7. Reports should not include dummy data.
+8. Export may be optional in Phase 1.
+9. Future reports should only be enabled when related modules are implemented.
+
+#### Validation Examples
+
+Maria opens a report showing all classes open for registration under Filipino Skills Academy Dubai.
+
+Raymond opens a platform-level report showing all users by role.
+
+Ana should not access the Scheduled Class Report.
+
+If Certification Management is not implemented, the system should not show a Certificate Issuance Report.
+
+---
+
+### 9.17 Settings and Configuration Rules
+
+Settings control reusable values and system behavior.
+
+#### Rules
+
+1. Only authorized users should access settings.
+2. Super Admin may manage platform-level settings.
+3. Admin may manage academy-level settings.
+4. Instructor and Registered Users / Potential Students should not manage system settings.
+5. Lookup values such as course levels, delivery modes, and class statuses should be controlled to avoid inconsistent data.
+6. Settings changes should be recorded for audit purposes.
+7. Future settings should not be shown as active unless the related module is implemented.
+
+#### Validation Examples
+
+Admin configures course levels:
+
+* Beginner
+* Intermediate
+* Advanced
+
+Admin configures delivery modes:
+
+* Onsite
+* Online
+* Hybrid
+
+A Registered User / Potential Student should not access the settings page.
+
+---
+
+### 9.18 Notification and Announcement Rules
+
+Notification & Announcement Management is not included in Phase 1, but future rules should be considered during system design.
+
+#### Future Rules
+
+1. Only authorized users can create announcements.
+2. Announcements should have a target audience.
+3. Notifications should only be sent to intended users.
+4. Schedule change notifications should be sent to affected users.
+5. Payment reminders should be sent to users with pending or overdue payments.
+6. Certificate notifications should be sent only to eligible students.
+7. Notification history should be stored.
+8. Users should be able to view previous notifications.
+9. Notification delivery channels may include in-app, email, push notification, or SMS in future phases.
+10. Notifications should not expose sensitive information to unauthorized users.
+
+#### Future Examples
+
+Admin sends an academy-wide announcement:
+
+**"Early bird discount available for Basic Caregiving Batch 2026-A until July 31."**
+
+The schedule for **Basic English Batch 2026-B** changes. The system sends a notification to enrolled students and the assigned Instructor.
+
+Ana has an installment payment due. The system sends a payment reminder.
+
+---
+
+### 9.19 Payment Management Rules
+
+Payment Management is not included in Phase 1, but future rules should be considered during system design.
+
+#### Future Rules
+
+1. Only authorized users should configure payment settings.
+2. Only authorized Finance Staff should access finance-sensitive screens.
+3. Students should be able to pay online when the payment module is implemented.
+4. Payment transactions should be recorded with transaction references.
+5. Failed payment attempts should be recorded.
+6. Payment reversals should require authorization.
+7. Payment reversals should require a reason.
+8. Refunds should follow academy policy.
+9. Installment payments should track due dates and payment status separately.
+10. Payment reminders should connect to Notification Management.
+11. Payment records should be auditable.
+12. Finance reports should be restricted to authorized users.
+13. Payment gateway integration should record gateway reference numbers.
+14. Duplicate payment handling should be supported.
+15. Payment status should be clear and traceable.
+
+#### Future Examples
+
+Ana pays **AED 1,200** online for **Basic Caregiving Batch 2026-A**. The system records the payment as Paid and stores the payment gateway reference.
+
+Ana accidentally pays twice. Finance Staff reviews both transactions and reverses the duplicate payment with a reason.
+
+The academy allows three installments of **AED 400** each. The system tracks each installment separately and sends reminders before due dates.
+
+---
+
+### 9.20 Admissions and Enrollment Rules
+
+Admissions & Enrollment is not included in Phase 1, but future rules should be considered.
+
+#### Future Rules
+
+1. A Registered User / Potential Student may apply for a class open for registration.
+2. A user should not apply for a class that is ongoing, completed, cancelled, or not open for registration.
+3. Admission Staff or authorized users may review applications.
+4. Approved applications may become enrollments.
+5. Rejected applications should record a reason.
+6. Prerequisite validation should occur before enrollment.
+7. Enrollment should connect a user to a class.
+8. A user may be enrolled in multiple classes if allowed.
+9. Enrollment status should be tracked.
+10. Enrolled students should become active students for the selected class.
+
+#### Future Example
+
+Ana applies for **Basic Caregiving Batch 2026-A**. Admission Staff approves her application and enrolls her in the class.
+
+Rico tries to apply for **Advanced Caregiving**, but he has not completed **Basic Caregiving**. The system prevents the application or enrollment based on prerequisite rules.
+
+---
+
+### 9.21 Attendance Rules
+
+Attendance Management is not included in Phase 1, but future rules should be considered.
+
+#### Future Rules
+
+1. Attendance should be recorded per class session.
+2. Only authorized users should record attendance.
+3. Instructors may record attendance for assigned classes.
+4. Attendance statuses may include Present, Absent, Late, and Excused.
+5. Attendance percentage should be calculated from attendance records.
+6. Attendance may be used for certificate eligibility.
+7. Attendance corrections should be recorded with audit history.
+
+#### Future Example
+
+For **Basic English Batch 2026-A**, the Instructor marks:
+
+* Ana - Present
+* Rico - Late
+* Juan - Absent
+
+If the academy requires 80% attendance for certification, the system should calculate each student's attendance percentage.
+
+---
+
+### 9.22 Exam and Assessment Rules
+
+Exam & Assessment Management is not included in Phase 1, but future rules should be considered.
+
+#### Future Rules
+
+1. Assessments may include exams, quizzes, assignments, and practical tests.
+2. Assessments should be linked to courses, classes, or subjects.
+3. Only authorized users should create assessments.
+4. Instructors may manage assessments for assigned classes if permitted.
+5. Scores should be recorded and traceable.
+6. Passing score should be configurable.
+7. Assessment results may determine course completion.
+8. Assessment results may determine prerequisite completion.
+9. Assessment results may determine certificate eligibility.
+
+#### Future Example
+
+For **Microsoft Excel for Beginners**, students complete a practical test. A passing score of 75% is required.
+
+If Ana scores 85%, she passes. If Rico scores 60%, he fails and may not be eligible for certification.
+
+---
+
+### 9.23 Certification Rules
+
+Certification Management is not included in Phase 1, but future rules should be considered.
+
+#### Future Rules
+
+1. Certificates should be issued only to eligible students.
+2. Eligibility may depend on enrollment completion, attendance, assessment results, and payment status.
+3. Certificate numbers should be unique.
+4. Certificate approval should be performed by authorized users.
+5. Issued certificates should be downloadable by students.
+6. Certificates should have verification codes or unique certificate IDs.
+7. Revoked certificates should remain in history but should be marked as revoked.
+
+#### Future Example
+
+Ana completes **Basic Caregiving**, meets the 80% attendance requirement, passes the final assessment, and has no pending payment. The Certificate Officer approves and issues her certificate.
+
+---
+
+### 9.24 Audit Trail Rules
+
+Academiya should maintain audit history for important actions.
+
+#### Rules
+
+1. The system should record who created important records.
+2. The system should record who updated important records.
+3. The system should record when important records were created or updated.
+4. Role assignment changes should be audited.
+5. Account activation and deactivation should be audited.
+6. Program, course, prerequisite, and class changes should be audited.
+7. Class status changes should be audited.
+8. Future payment reversals and refunds must be audited.
+9. Future certificate issuance and revocation must be audited.
+10. Audit records should not be editable by normal users.
+
+#### Examples
+
+Maria assigns Juan as Instructor. The system records:
+
+* Action: Role Assignment
+* User affected: Juan Santos
+* Role assigned: Instructor
+* Assigned by: Maria Cruz
+* Date and time
+
+Maria changes Basic Caregiving Batch 2026-A from Scheduled to Open for Registration. The system records the status change.
+
+Finance Staff reverses a duplicate payment in the future. The system records who performed the reversal, when it was performed, and the reason.
+
+---
+
+### 9.25 Error Message Rules
+
+System messages should be clear, useful, and user-friendly.
+
+#### Rules
+
+1. Error messages should explain what went wrong.
+2. Error messages should guide the user on what to do next.
+3. Error messages should not expose sensitive technical information.
+4. Validation messages should appear near the related field where possible.
+5. Access-denied messages should be clear.
+
+#### Example Messages
+
+Invalid login:
+
+**"Invalid email address or password."**
+
+Unverified email:
+
+**"Please verify your email address before logging in."**
+
+Access denied:
+
+**"You do not have permission to access this page or perform this action."**
+
+Duplicate email:
+
+**"This email address is already registered. Please log in or use another email address."**
+
+Invalid class date:
+
+**"Class end date cannot be earlier than class start date."**
+
+Invalid prerequisite:
+
+**"A course cannot be its own prerequisite."**
+
+---
+
+### 9.26 Phase 1 Business and Validation Rule Summary
+
+For Phase 1, Academiya should enforce the following key rules:
+
+1. **All users register using the same registration process.**
+
+   * Example: Ana, Maria, and Juan all register the same way.
+
+2. **Email verification is required before access.**
+
+   * Example: Ana must click the "Verify this email" link before logging in.
+
+3. **Every verified user becomes a Registered User / Potential Student by default.**
+
+   * Example: Ana can browse programs, courses, and classes after verification.
+
+4. **Operational roles are assigned by authorized users.**
+
+   * Example: Maria assigns Juan as Instructor.
+
+5. **Permissions must respect role and scope.**
+
+   * Example: Maria can manage only her assigned academy.
+
+6. **Programs and courses must have valid statuses and visibility settings.**
+
+   * Example: Draft courses are hidden from potential students.
+
+7. **Courses may have prerequisites.**
+
+   * Example: Advanced Caregiving requires Basic Caregiving.
+
+8. **Prerequisite setup must prevent invalid relationships.**
+
+   * Example: A course cannot be its own prerequisite.
+
+9. **Classes must be linked to active courses.**
+
+   * Example: Basic Caregiving Batch 2026-A must be linked to Basic Caregiving.
+
+10. **Class schedule data must be valid.**
+
+   * Example: End date cannot be earlier than start date.
+
+11. **Class visibility depends on class status.**
+
+   * Example: Ongoing classes are visible but not open for registration.
+
+12. **Dashboards and reports must use real data only.**
+
+   * Example: Payment revenue should not appear before Payment Management is implemented.
+
+13. **Unauthorized access must be blocked.**
+
+   * Example: Ana cannot access Program Create page.
+
+14. **Important changes should be audited.**
+
+   * Example: Role assignment and class status changes should be recorded.
+
+Future rules for admissions, notifications, payments, attendance, exams, and certifications should be considered during architecture design but are not part of Phase 1 implementation.
+
+---
+
+## 10. Phase 1 Scope and Future Roadmap
+
+This chapter defines the confirmed scope for Phase 1 and the planned capabilities for future phases.
+
+The purpose of this chapter is to make the implementation scope clear for developers, Systems Analysts, testers, project managers, and stakeholders. It should help the team understand what must be built in Phase 1, what should only be prepared for future expansion, and what should not be treated as Phase 1 deliverables.
+
+---
+
+### 10.1 Phase 1 Objective
+
+The objective of Phase 1 is to build the foundation of Academiya.
+
+Phase 1 should allow users to register, verify their email, log in, browse available academy offerings, and allow authorized users to manage the first core academic setup.
+
+Phase 1 should focus on:
+
+* User registration
+* Email verification
+* Login and account access
+* Default Registered User / Potential Student access
+* Role assignment
+* Program management
+* Course management
+* Course prerequisite setup
+* Basic class scheduling
+* Program, course, and class browsing
+* Role-based dashboard
+* Basic reports
+* Basic settings
+
+Phase 1 should not attempt to deliver the full academy lifecycle yet. Features such as full student admission, enrollment, learning materials, attendance, exams, certifications, online payments, and notifications should be planned for future phases.
+
+#### Example
+
+In Phase 1, Ana can register, verify her email, log in, and browse **Healthcare Program**, **Basic Caregiving**, and **Basic Caregiving Batch 2026-A**.
+
+Maria, as Admin, can create **Healthcare Program**, create **Basic Caregiving**, set **Basic Caregiving** as a prerequisite for **Advanced Caregiving**, and schedule **Basic Caregiving Batch 2026-A**.
+
+However, Ana may not yet complete the full admission, payment, attendance, assessment, and certification process in Phase 1.
+
+---
+
+### 10.2 Phase 1 In-Scope Features
+
+The following features are included in Phase 1.
+
+---
+
+#### 10.2.1 Authentication & Account Access
+
+Phase 1 should include user registration, email verification, login, logout, and password reset.
+
+Included features:
+
+* User registration
+* Email and password login
+* Email verification using a **"Verify this email"** link
+* Password creation
+* Forgot password
+* Password reset using email link
+* Logout
+* Account status control
+* Default Registered User / Potential Student access after email verification
+
+Not included in Phase 1:
+
+* Mobile OTP
+* SMS OTP
+* Email OTP
+* Social login
+* Multi-factor authentication
+
+#### Example
+
+Ana registers using `ana@example.com`. The system sends her a verification email. Ana clicks **"Verify this email"** and her account becomes active. She can then log in using her email and password.
+
+---
+
+#### 10.2.2 Registered User / Potential Student Access
+
+Every newly verified user should become a **Registered User / Potential Student** by default.
+
+Included features:
+
+* Student-facing dashboard
+* Browse visible programs
+* Browse visible courses
+* View course prerequisites
+* View classes open for registration
+* View ongoing classes
+* View completed classes
+* View class details
+
+Not included in Phase 1:
+
+* Full class application
+* Full admission process
+* Full enrollment process
+* Student learning record
+* Attendance tracking
+* Assessment results
+* Certificate download
+
+#### Example
+
+Ana logs in after verifying her email. She can view:
+
+* **Healthcare Program**
+* **Basic Caregiving**
+* **Advanced Caregiving**
+* **Basic Caregiving Batch 2026-A - Open for Registration**
+* **Basic English Batch 2026-B - Ongoing**
+* **Microsoft Excel Batch 2025-C - Completed**
+
+---
+
+#### 10.2.3 User & Role Management
+
+Phase 1 should include basic user management and role assignment.
+
+Included features:
+
+* User search
+* User profile view
+* Role assignment
+* Role scope assignment
+* Account activation
+* Account deactivation
+* Role-based access control
+* Audit record for role and account changes, if implemented
+
+Phase 1 active roles:
+
+* Super Admin
+* Admin
+* Instructor
+
+Default access type:
+
+* Registered User / Potential Student
+
+Future roles to prepare for:
+
+* Academy Manager
+* Admission Staff
+* Finance Staff
+* Content Manager
+* Certificate Officer
+
+#### Example
+
+Maria searches for Juan using his email address. Juan is currently a Registered User / Potential Student. Maria assigns Juan as an **Instructor** for **Microsoft Excel for Beginners**.
+
+After the assignment, Juan sees the Instructor dashboard.
+
+---
+
+#### 10.2.4 Program Management
+
+Phase 1 should allow authorized users to create and manage programs.
+
+Included features:
+
+* Create program
+* View program
+* Edit program
+* Change program status
+* Set program visibility
+* Archive program, if included
+* Browse active and visible programs as Registered User / Potential Student
+
+Recommended program statuses:
+
+* Draft
+* Active
+* Inactive
+* Archived
+
+#### Example
+
+Maria creates a program:
+
+* Program Name: Healthcare Program
+* Program Code: HLTH
+* Category: Healthcare
+* Status: Active
+* Visibility: Visible to Registered Users
+
+Ana can see the Healthcare Program after logging in.
+
+---
+
+#### 10.2.5 Course Management
+
+Phase 1 should allow authorized users to create and manage courses under programs.
+
+Included features:
+
+* Create course
+* View course
+* Edit course
+* Change course status
+* Set course visibility
+* Set course level
+* Set course duration
+* Set course requirements
+* Set course fee field, if included
+* Archive course, if included
+* Browse active and visible courses as Registered User / Potential Student
+
+Recommended course statuses:
+
+* Draft
+* Active
+* Inactive
+* Archived
+
+#### Example
+
+Maria creates a course:
+
+* Program: Healthcare Program
+* Course Name: Basic Caregiving
+* Course Code: CARE-BASIC
+* Level: Beginner
+* Duration: 8 weeks
+* Fee: AED 1,200
+* Status: Active
+* Visibility: Visible to Registered Users
+
+Ana can see Basic Caregiving under Healthcare Program.
+
+---
+
+#### 10.2.6 Course Prerequisite Setup
+
+Phase 1 should allow authorized users to define course prerequisites.
+
+Included features:
+
+* Enable or disable prerequisite requirement for a course
+* Select one or more prerequisite courses
+* Display prerequisite information in course details
+* Prevent invalid prerequisite setup
+* Prevent a course from being its own prerequisite
+* Prevent circular prerequisite relationships where possible
+
+Not included in Phase 1:
+
+* Automatic prerequisite validation during class registration
+* Student completion history
+* Pass or fail validation
+* Enrollment blocking based on prerequisite completion
+
+#### Example
+
+Maria creates **Advanced Caregiving** and sets **Basic Caregiving** as a prerequisite.
+
+When Ana views Advanced Caregiving, she sees:
+
+**"Prerequisite: Basic Caregiving must be completed before taking this course."**
+
+---
+
+#### 10.2.7 Subject Setup
+
+Subject setup may be included in Phase 1 if needed for instructor assignment or academic structure.
+
+Included if required:
+
+* Create subject
+* View subject
+* Edit subject
+* Assign subject to course
+* Assign instructor to subject, if applicable
+* Set subject status
+
+If not included in Phase 1, the data structure should still prepare for future subject management.
+
+#### Example
+
+For **Basic Caregiving**, Maria may create subjects:
+
+* Elderly Care
+* First Aid
+* Basic Nursing Skills
+
+For **Microsoft Excel for Beginners**, Maria may create subjects:
+
+* Spreadsheet Basics
+* Formulas and Functions
+* Charts
+
+---
+
+#### 10.2.8 Class Scheduling & Class Management
+
+Phase 1 should include basic class scheduling.
+
+Included features:
+
+* Create class or batch
+* Link class to active course
+* Select related program through course
+* Assign instructor
+* Define class start date
+* Define class end date
+* Define schedule
+* Define class capacity
+* Define delivery mode
+* Define location or online link
+* Set class status
+* Set class visibility
+* View class list
+* View class details
+* Update class details
+* Cancel class, if allowed
+
+Recommended class statuses:
+
+* Draft
+* Scheduled
+* Open for Registration
+* Ongoing
+* Completed
+* Cancelled
+
+#### Example
+
+Maria creates:
+
+* Class Name: Basic Caregiving Batch 2026-A
+* Course: Basic Caregiving
+* Instructor: Liza Santos
+* Start Date: August 1, 2026
+* End Date: September 26, 2026
+* Schedule: Every Saturday, 9:00 AM to 12:00 PM
+* Capacity: 25 students
+* Delivery Mode: Onsite
+* Location: Dubai Campus Room 101
+* Status: Open for Registration
+
+Ana can see this class because it is open for registration.
+
+---
+
+#### 10.2.9 Program, Course, and Class Browsing
+
+Phase 1 should allow Registered Users / Potential Students to browse visible academy offerings.
+
+Included features:
+
+* Browse visible programs
+* Browse visible courses
+* View course details
+* View course prerequisites
+* Browse classes by status
+* View classes open for registration
+* View ongoing classes
+* View completed classes
+* View class details
+
+Not included in Phase 1:
+
+* Full application submission
+* Admission review
+* Enrollment confirmation
+* Payment
+* Attendance
+* Certificate download
+
+#### Example
+
+Rico opens **Computer Skills Program** and sees:
+
+* Computer Literacy
+* Microsoft Excel for Beginners
+* Microsoft Excel Intermediate
+
+He opens **Microsoft Excel for Beginners** and sees:
+
+* Excel Batch 2026-A - Open for Registration
+* Excel Batch 2026-B - Ongoing
+* Excel Batch 2025-C - Completed
+
+---
+
+#### 10.2.10 Dashboard
+
+Phase 1 should include role-based dashboards.
+
+Included dashboards:
+
+* Registered User / Potential Student Dashboard
+* Super Admin Dashboard
+* Admin Dashboard
+* Instructor Dashboard
+
+Dashboard rules:
+
+* Display real data only
+* Display data based on role and permission
+* Display data based on scope
+* Do not show dummy or placeholder data
+* Do not show future module metrics until modules are implemented
+
+#### Example
+
+Ana sees available programs, courses, and classes.
+
+Maria sees users, programs, courses, and class summaries for her academy.
+
+Juan sees assigned courses and scheduled classes.
+
+---
+
+#### 10.2.11 Basic Reports
+
+Phase 1 may include basic reports based on available Phase 1 data.
+
+Included reports may include:
+
+* Registered user report
+* User role assignment report
+* User status report
+* Program report
+* Course report
+* Course prerequisite report
+* Scheduled class report
+* Class status report
+
+Export may be optional in Phase 1.
+
+#### Example
+
+Maria opens the **Class Status Report** and filters classes by **Open for Registration**.
+
+Raymond opens the **User Role Assignment Report** and sees how many users are Admins, Instructors, and Registered Users / Potential Students.
+
+---
+
+#### 10.2.12 Settings & Configuration
+
+Phase 1 should include basic settings needed by the available modules.
+
+Included settings may include:
+
+* Account settings
+* Role and permission settings
+* Program categories
+* Course categories
+* Course levels
+* Class delivery modes
+* Class statuses
+* Visibility settings
+* Email verification settings
+* Password policy settings
+
+#### Example
+
+Admin configures:
+
+* Course Levels: Beginner, Intermediate, Advanced
+* Delivery Modes: Onsite, Online, Hybrid
+* Class Statuses: Draft, Scheduled, Open for Registration, Ongoing, Completed, Cancelled
+
+---
+
+### 10.3 Phase 1 Out-of-Scope Features
+
+The following features are not included in Phase 1.
+
+They should not be developed as Phase 1 deliverables unless the project scope is officially changed.
+
+#### Out of Scope for Phase 1
+
+* Mobile OTP
+* SMS OTP
+* Email OTP
+* Social login
+* Multi-factor authentication
+* Full admissions workflow
+* Full enrollment workflow
+* Learning materials management
+* Attendance management
+* Exam and assessment management
+* Certification management
+* Notification and announcement management
+* Online payment
+* Invoice generation
+* Receipt generation
+* Payment reversal
+* Refund handling
+* Payment gateway integration
+* Finance Staff transaction panel
+* Payment reminders
+* Advanced analytics
+* Advanced reporting
+* Public program browsing without login, unless separately approved
+
+#### Example
+
+In Phase 1, Ana may see that **Basic Caregiving Batch 2026-A** is open for registration. However, if full class registration is not included, she may not yet submit an application or pay online.
+
+Another example:
+
+Maria may enter a course fee such as **AED 1,200** for Basic Caregiving. However, the system should not process online payment in Phase 1.
+
+---
+
+### 10.4 Future Roadmap Overview
+
+The following roadmap describes the recommended future phases after Phase 1.
+
+This roadmap may be adjusted based on business priorities, budget, user feedback, and implementation complexity.
+
+---
+
+### 10.5 Future Phase 2: Admissions & Enrollment
+
+Phase 2 may focus on the student application and enrollment lifecycle.
+
+Possible capabilities:
+
+* Class registration form
+* Student application submission
+* Application review
+* Admission approval
+* Admission rejection
+* Required document submission
+* Enrollment confirmation
+* Enrollment status tracking
+* Prerequisite validation during registration or enrollment
+* Student list by class
+
+#### Example
+
+Ana applies for **Basic Caregiving Batch 2026-A**. Admission Staff reviews the application, confirms her details, approves the application, and marks Ana as enrolled.
+
+Another example:
+
+Rico tries to apply for **Advanced Caregiving**, but he has not completed **Basic Caregiving**. The system blocks the application or displays a prerequisite warning.
+
+---
+
+### 10.6 Future Phase 3: Learning Materials
+
+Phase 3 may focus on learning content management.
+
+Possible capabilities:
+
+* Upload PDF files
+* Upload documents
+* Add video links
+* Add external learning links
+* Link materials to program, course, subject, class, or session
+* Material visibility control
+* Student access to enrolled class materials
+* Instructor access to assigned class materials
+
+#### Example
+
+A Content Manager uploads **Basic Caregiving Module 1.pdf** and links it to the **Basic Caregiving** course.
+
+Another example:
+
+An Instructor adds a video link called **Introduction to Elderly Care** under the **Elderly Care** subject.
+
+---
+
+### 10.7 Future Phase 4: Attendance Management
+
+Phase 4 may focus on attendance tracking.
+
+Possible capabilities:
+
+* Create class sessions
+* Record attendance per session
+* Attendance statuses: Present, Absent, Late, Excused
+* Attendance correction
+* Attendance percentage calculation
+* Attendance reports
+* Attendance requirement for certificate eligibility
+
+#### Example
+
+For **Basic English Batch 2026-A**, the Instructor records attendance:
+
+* Ana - Present
+* Rico - Late
+* Juan - Absent
+
+If the academy requires 80% attendance for certification, the system calculates whether each student meets the requirement.
+
+---
+
+### 10.8 Future Phase 5: Exam & Assessment Management
+
+Phase 5 may focus on student evaluation.
+
+Possible capabilities:
+
+* Create quizzes
+* Create exams
+* Create assignments
+* Create practical assessments
+* Assign assessments to class or subject
+* Enter scores
+* Calculate grades
+* Determine pass or fail
+* Publish results to students
+* Use assessment results for course completion and certificate eligibility
+
+#### Example
+
+For **Microsoft Excel for Beginners**, students complete a practical exam where they create a spreadsheet with formulas and charts.
+
+Passing score: 75%.
+
+Ana scores 85% and passes. Rico scores 60% and fails.
+
+---
+
+### 10.9 Future Phase 6: Certification Management
+
+Phase 6 may focus on certificate eligibility, generation, approval, and issuance.
+
+Possible capabilities:
+
+* Certificate eligibility checking
+* Certificate template setup
+* Certificate generation
+* Certificate approval
+* Certificate number generation
+* Certificate issue date
+* Certificate download
+* Certificate verification
+* Certificate revocation
+
+#### Example
+
+Ana completes **Basic Caregiving Batch 2026-A**, meets the attendance requirement, passes the final assessment, and has no pending payment. The Certificate Officer approves and issues her certificate.
+
+The certificate has a unique certificate number such as **CERT-2026-0001**.
+
+---
+
+### 10.10 Future Phase 7: Notification & Announcement Management
+
+Phase 7 may focus on communication and alerts.
+
+Possible capabilities:
+
+* Academy-wide announcements
+* Class-specific announcements
+* Schedule change notifications
+* Course update notifications
+* Payment reminders
+* Certificate availability notifications
+* Notification history
+* Read and unread status
+* In-app notifications
+* Email notifications
+* Mobile push notifications
+* SMS notifications, if supported later
+
+#### Example
+
+The academy sends an announcement:
+
+**"Early bird discount available for Basic Caregiving Batch 2026-A until July 31."**
+
+Another example:
+
+The schedule for **Basic English Batch 2026-B** changes from Saturday to Sunday. The system notifies enrolled students and the assigned Instructor.
+
+Another example:
+
+Ana has an installment payment due soon. The system sends her a payment reminder.
+
+---
+
+### 10.11 Future Phase 8: Payment Management
+
+Phase 8 may focus on online payment and finance operations.
+
+Possible capabilities:
+
+* Course fee setup
+* Class fee setup
+* Online payment
+* Payment gateway integration
+* Installment payment support
+* Payment due dates
+* Payment reminders
+* Payment status tracking
+* Transaction history
+* Invoice generation
+* Receipt generation
+* Refund handling
+* Payment reversal
+* Finance Staff configuration panel
+* Transaction search
+* Transaction reconciliation
+* Failed transaction handling
+* Finance reports
+
+#### Example
+
+Ana registers for **Basic Caregiving Batch 2026-A** with a fee of **AED 1,200**. She pays online using the payment gateway.
+
+Another example:
+
+The academy allows Ana to pay in three installments:
+
+* AED 400 upon registration
+* AED 400 before the second month
+* AED 400 before course completion
+
+Another example:
+
+Ana accidentally pays twice. Finance Staff reviews both transactions and reverses the duplicate payment with a recorded reason.
+
+---
+
+### 10.12 Future Phase 9: Advanced Reports & Analytics
+
+Phase 9 may focus on advanced reporting and decision support.
+
+Possible capabilities:
+
+* Enrollment analytics
+* Attendance analytics
+* Assessment performance reports
+* Certificate issuance reports
+* Payment reports
+* Revenue reports
+* Course demand reports
+* Instructor performance reports
+* Academy performance dashboard
+* Export to Excel or PDF
+* Scheduled reports, if needed
+
+#### Example
+
+Academy Manager views a report showing that **Basic Caregiving** has the highest number of registrations, while **Business English** has lower demand.
+
+Another example:
+
+Finance Staff views monthly revenue by course and class.
+
+---
+
+### 10.13 Future Phase 10: Mobile Experience Enhancements
+
+Since Academiya will be available as a mobile app, future phases may improve mobile-specific features.
+
+Possible capabilities:
+
+* Mobile push notifications
+* Mobile-friendly class browsing
+* Mobile payment
+* Mobile certificate download
+* Mobile attendance check-in, if needed
+* Mobile learning material access
+* Offline access to selected materials, if needed
+
+#### Example
+
+Ana receives a push notification on her phone that her class schedule has changed.
+
+Another example:
+
+Ana downloads her certificate directly from the mobile app.
+
+---
+
+### 10.14 Architecture Preparation for Future Phases
+
+Even though future modules are not included in Phase 1, the Phase 1 architecture should be designed to support future expansion.
+
+The development team should avoid building Phase 1 in a way that blocks future modules.
+
+#### Architecture Preparation Areas
+
+1. **User and Role Design**
+
+   * Should support future roles such as Finance Staff, Admission Staff, Content Manager, and Certificate Officer.
+
+2. **Program and Course Design**
+
+   * Should support future learning materials, assessments, prerequisites, payments, and certifications.
+
+3. **Class Design**
+
+   * Should support future admissions, enrollment, schedules, attendance, notifications, payments, and certificates.
+
+4. **Fee Fields**
+
+   * If course or class fee is captured in Phase 1, it should be structured to support future payment management.
+
+5. **Status Fields**
+
+   * Status values should be controlled and consistent so they can support future workflows.
+
+6. **Audit Trail**
+
+   * Important actions should be traceable, especially role assignment, account changes, course changes, class status changes, and future payment actions.
+
+7. **Notification Readiness**
+
+   * Class schedule changes should be structured so they can trigger notifications in future phases.
+
+8. **Payment Readiness**
+
+   * Course and class records should be structured so future online payment, invoice, receipt, and installment modules can connect to them.
+
+#### Example
+
+If **Basic Caregiving Batch 2026-A** has a schedule change, Phase 1 may only update the schedule. In a future phase, the same schedule change should trigger a notification to enrolled students and the assigned Instructor.
+
+Another example:
+
+If **Basic Caregiving** has a course fee of **AED 1,200**, Phase 1 may only store the fee. In a future phase, this fee should connect to invoice generation, online payment, installment setup, and receipt generation.
+
+---
+
+### 10.15 Phase 1 Success Criteria
+
+Phase 1 may be considered successful when the following outcomes are achieved:
+
+1. Users can register using email and password.
+2. Users can verify email using a **"Verify this email"** link.
+3. Verified users can log in.
+4. Verified users without operational roles become Registered Users / Potential Students.
+5. Registered Users / Potential Students can browse visible programs, courses, prerequisites, and classes.
+6. Super Admin and Admin users can search users and assign roles.
+7. Role assignment changes dashboard and access permissions.
+8. Authorized users can create and manage programs.
+9. Authorized users can create and manage courses.
+10. Authorized users can define course prerequisites.
+11. Authorized users can schedule classes.
+12. Classes can be categorized by status.
+13. Dashboards display real Phase 1 data only.
+14. Basic reports are available from Phase 1 data, if included.
+15. Settings support Phase 1 modules.
+16. Access control prevents unauthorized users from accessing restricted screens.
+17. The system architecture is prepared for future modules.
+
+#### Example
+
+A complete Phase 1 demonstration may show:
+
+1. Ana registers and verifies her email.
+2. Ana logs in and sees the potential student dashboard.
+3. Maria logs in as Admin.
+4. Maria creates Healthcare Program.
+5. Maria creates Basic Caregiving.
+6. Maria creates Advanced Caregiving and sets Basic Caregiving as a prerequisite.
+7. Maria schedules Basic Caregiving Batch 2026-A.
+8. Ana sees Basic Caregiving Batch 2026-A as open for registration.
+9. Maria assigns Juan as Instructor.
+10. Juan logs in and sees his assigned class.
+
+---
+
+### 10.16 Phase 1 Deliverables
+
+Recommended Phase 1 deliverables include:
+
+1. Functional web application for core admin operations
+2. Functional mobile application for registration, login, browsing, and dashboard access
+3. User registration and email verification flow
+4. Login and password reset flow
+5. Role-based access control
+6. User management screens
+7. Role assignment screens
+8. Program management screens
+9. Course management screens
+10. Course prerequisite setup screens
+11. Class scheduling screens
+12. Browsing screens for programs, courses, and classes
+13. Role-based dashboards
+14. Basic reports, if included
+15. Basic settings
+16. Audit trail for key changes, if included
+17. Basic testing and validation documentation
+
+---
+
+### 10.17 Future Roadmap Summary
+
+The recommended roadmap after Phase 1 is:
+
+| Phase    | Focus Area                    | Example Capability                                       |
+| -------- | ----------------------------- | -------------------------------------------------------- |
+| Phase 1  | Platform Foundation           | Registration, roles, programs, courses, class scheduling |
+| Phase 2  | Admissions & Enrollment       | Student applications and enrollment approval             |
+| Phase 3  | Learning Materials            | PDF uploads, video links, course materials               |
+| Phase 4  | Attendance                    | Session attendance and attendance percentage             |
+| Phase 5  | Exams & Assessments           | Quizzes, practical tests, scores, pass/fail              |
+| Phase 6  | Certifications                | Eligibility, certificate generation, download            |
+| Phase 7  | Notifications & Announcements | Announcements, reminders, schedule changes               |
+| Phase 8  | Payments                      | Online payment, installments, reversals, receipts        |
+| Phase 9  | Advanced Reports & Analytics  | Operational, academic, and finance analytics             |
+| Phase 10 | Mobile Enhancements           | Push notifications, mobile payment, certificate download |
+
+This roadmap allows Academiya to start with a stable foundation and then grow into a complete academy management platform over time.
+
+---
+
+## 11. Non-Functional Requirements
+
+This chapter defines the non-functional requirements for Academiya.
+
+Non-functional requirements describe how the system should perform, behave, and operate. These requirements do not describe specific business features, but they are important for system quality, security, reliability, usability, maintainability, and scalability.
+
+For Academiya, non-functional requirements are important because the platform will be used by different types of users through both a web application and a mobile application.
+
+---
+
+### 11.1 Platform Availability
+
+Academiya should be available as both a web application and a mobile application.
+
+The web application will mainly support administrative and operational tasks, while the mobile application will support user registration, browsing, dashboard access, and future student-facing activities.
+
+#### Requirements
+
+1. The system should be accessible through modern web browsers.
+2. The mobile application should be available for download from the Apple App Store and Google Play Store.
+3. Core functions should work consistently across web and mobile where applicable.
+4. If a function is not available on mobile, the system should clearly guide the user to use the web application.
+
+#### Example
+
+Maria may use the web application to create courses and schedule classes because those forms are more detailed.
+
+Ana may use the mobile application to register, log in, browse classes, and receive future notifications.
+
+---
+
+### 11.2 Usability
+
+Academiya should be easy to use for users with different technical backgrounds.
+
+The app will be used by academy administrators, instructors, and potential students. Some users may not be highly technical, so the interface should be clear and simple.
+
+#### Requirements
+
+1. Screens should use clear labels and instructions.
+2. Forms should clearly show required and optional fields.
+3. Error messages should explain what the user needs to fix.
+4. Navigation should be simple and role-based.
+5. Users should only see menus and actions relevant to their role.
+6. Important actions should have confirmation messages.
+7. Long forms should be organized into sections where needed.
+8. The system should avoid unnecessary technical terms in user-facing screens.
+
+#### Example
+
+If Ana enters an invalid email address during registration, the system should display:
+
+**"Please enter a valid email address."**
+
+It should not display a technical message such as:
+
+**"Invalid regex pattern."**
+
+Another example:
+
+Maria should see menu items such as **Users**, **Programs**, **Courses**, and **Classes**. Ana should not see admin menus such as **Role Assignment** or **Settings**.
+
+---
+
+### 11.3 Accessibility
+
+Academiya should be designed to be accessible and usable by a broad range of users.
+
+#### Requirements
+
+1. Text should be readable on both web and mobile screens.
+2. Buttons should be large enough to tap on mobile devices.
+3. Important information should not rely only on color.
+4. Forms should support keyboard navigation on web where possible.
+5. Error messages should be placed near the related fields where possible.
+6. The system should support readable contrast between text and background.
+7. Images should include alternative text where applicable.
+
+#### Example
+
+If a class is **Open for Registration**, the system should not only show it in green. It should also display the text **"Open for Registration"** so users can understand the status even if they cannot distinguish colors easily.
+
+---
+
+### 11.4 Security
+
+Academiya should protect user accounts, personal information, role permissions, and future financial data.
+
+Security is especially important because the system will manage user profiles, academy data, future payment records, and future certificates.
+
+#### Requirements
+
+1. Passwords must be stored securely using hashing.
+2. Passwords must not be stored as plain text.
+3. Email verification links should be secure and time-limited.
+4. Users must be authenticated before accessing protected pages.
+5. Users must only access data allowed by their role and scope.
+6. Unauthorized access attempts must be blocked.
+7. Sensitive actions should be logged.
+8. The system should protect against common web security risks such as unauthorized access, injection attacks, and cross-site scripting.
+9. Future payment-related features must follow payment security standards required by the selected payment gateway.
+10. The system should avoid exposing sensitive technical details in error messages.
+
+#### Example
+
+Ana should not be able to access the Program Create page by entering the URL directly.
+
+If she tries, the system should display:
+
+**"You do not have permission to access this page or perform this action."**
+
+Another example:
+
+If Juan is assigned as Instructor for **Microsoft Excel for Beginners**, he should not be able to manage **Basic Caregiving** unless he is also assigned to that course or class.
+
+---
+
+### 11.5 Authentication and Session Management
+
+Academiya should manage user login sessions securely.
+
+For Phase 1, authentication uses email and password only.
+
+#### Requirements
+
+1. Users must log in before accessing protected pages.
+2. Users must verify their email before accessing the platform.
+3. Sessions should expire after a configured period of inactivity.
+4. Users should be able to log out manually.
+5. After logout, users should not access protected pages without logging in again.
+6. Password reset links should be secure and time-limited.
+7. Repeated failed login attempts may trigger temporary lockout, if configured.
+
+#### Example
+
+Ana logs out from the mobile app. If she tries to open her dashboard again, the system should ask her to log in.
+
+Another example:
+
+Rico clicks an expired password reset link. The system should ask him to request a new password reset link.
+
+---
+
+### 11.6 Role-Based Access Control
+
+Academiya must enforce role-based access control across the application.
+
+#### Requirements
+
+1. Access should depend on role, permission, and scope.
+2. Menu items should be shown or hidden based on permission.
+3. API access should also enforce permission checks, not only the user interface.
+4. A user without an operational role should be treated as Registered User / Potential Student.
+5. Role changes should take effect immediately or at the next login, depending on implementation.
+6. Access-denied events should be handled clearly.
+7. Important access changes should be audited.
+
+#### Example
+
+Maria is Admin for **Filipino Skills Academy Dubai**. She can create courses for that academy.
+
+She should not manage courses for another academy unless she is assigned permission.
+
+Another example:
+
+Juan is Instructor for **Excel Batch 2026-A**. He can view that class but should not assign roles to other users.
+
+---
+
+### 11.7 Data Privacy
+
+Academiya should protect user personal information and ensure data is only visible to authorized users.
+
+#### Requirements
+
+1. User personal information should only be visible to authorized users.
+2. Users should be able to view their own basic profile.
+3. Admin users should only view users within their assigned academy scope.
+4. Sensitive data should not be exposed in reports or screens unless needed.
+5. Future payment data should be restricted to authorized finance users.
+6. Data should be handled according to applicable privacy requirements in the operating region.
+7. Personal information should not be shared with unauthorized parties.
+
+#### Example
+
+Ana can view her own profile.
+
+Maria can view Ana's profile only if Ana belongs to Maria's academy or is within Maria's permitted scope.
+
+Juan, as Instructor, should not view payment records or unrelated user profiles.
+
+---
+
+### 11.8 Performance
+
+Academiya should respond quickly enough to support normal academy operations.
+
+#### Requirements
+
+1. Common pages such as login, dashboard, program list, course list, and class list should load within an acceptable time under normal usage.
+2. Search results should return quickly for normal user volumes.
+3. Reports should be optimized so they do not slow down the system.
+4. Large future datasets such as attendance, payment transactions, and certificates should use pagination, filtering, or background processing where needed.
+5. Mobile screens should avoid loading unnecessary data.
+
+#### Example
+
+When Maria searches for `juan@example.com`, the result should appear quickly without loading all users in the system.
+
+Another example:
+
+The class list should use pagination or filtering if the academy has hundreds of completed classes.
+
+---
+
+### 11.9 Scalability
+
+Academiya should be designed to grow over time.
+
+The system may start with one academy or a small number of users, but it should be prepared to support more users, academies, classes, and future modules.
+
+#### Requirements
+
+1. The data model should support future roles.
+2. The data model should support future modules such as admissions, payments, notifications, attendance, exams, and certificates.
+3. The system should support increasing numbers of users, courses, and classes.
+4. The system should be designed to support multiple academies or branches if required.
+5. Reports and dashboards should remain usable as data volume grows.
+
+#### Example
+
+Phase 1 may start with **Filipino Skills Academy Dubai** only.
+
+In the future, Academiya may support:
+
+* Filipino Skills Academy Dubai
+* Filipino Skills Academy Abu Dhabi
+* Filipino Skills Academy Sharjah
+
+The system should not require a major redesign to support this growth.
+
+---
+
+### 11.10 Reliability
+
+Academiya should behave consistently and protect users from data loss.
+
+#### Requirements
+
+1. Important transactions should either complete successfully or fail safely.
+2. Users should receive confirmation after saving important records.
+3. The system should avoid duplicate records where uniqueness is required.
+4. The system should validate data before saving.
+5. If an error occurs, the system should show a useful message.
+6. The system should prevent accidental data loss where possible.
+7. Critical actions should require confirmation.
+
+#### Example
+
+When Maria creates **Basic Caregiving**, the system should confirm:
+
+**"Course saved successfully."**
+
+Another example:
+
+If Maria tries to leave a form with unsaved changes, the system may warn:
+
+**"You have unsaved changes. Do you want to leave this page?"**
+
+---
+
+### 11.11 Auditability
+
+Academiya should record important actions for traceability.
+
+Audit records help investigate issues, support accountability, and protect sensitive operations.
+
+#### Requirements
+
+The system should record audit information for important actions, such as:
+
+* User registration
+* Email verification
+* Login attempts, if implemented
+* Role assignment
+* Role removal
+* Account activation
+* Account deactivation
+* Program creation and update
+* Course creation and update
+* Prerequisite setup
+* Class creation and update
+* Class status changes
+* Future payment reversals
+* Future refund processing
+* Future certificate issuance and revocation
+
+Audit records may include:
+
+* Action performed
+* User who performed the action
+* User or record affected
+* Date and time
+* Previous value, where applicable
+* New value, where applicable
+* Reason, where applicable
+
+#### Example
+
+Maria changes **Basic Caregiving Batch 2026-A** from **Scheduled** to **Open for Registration**.
+
+The system records:
+
+* Action: Class Status Change
+* Class: Basic Caregiving Batch 2026-A
+* Previous Status: Scheduled
+* New Status: Open for Registration
+* Changed By: Maria Cruz
+* Date and Time: Recorded by system
+
+---
+
+### 11.12 Maintainability
+
+Academiya should be designed so future changes and modules can be added without major redevelopment.
+
+#### Requirements
+
+1. Code should be modular.
+2. Business logic should be separated from presentation logic where possible.
+3. Role and permission logic should be reusable across screens and APIs.
+4. Status values should be managed consistently.
+5. Future modules should be able to connect to existing entities such as User, Course, Class, and Enrollment.
+6. Configuration values should not be hard-coded when they may change.
+7. Documentation should be maintained as the system evolves.
+
+#### Example
+
+Class statuses such as **Draft**, **Scheduled**, **Open for Registration**, **Ongoing**, **Completed**, and **Cancelled** should be centrally managed. They should not be hard-coded differently across multiple screens.
+
+Another example:
+
+When Payment Management is added later, it should connect to existing class and user records instead of requiring duplicate user or class data.
+
+---
+
+### 11.13 Compatibility
+
+Academiya should support common devices, browsers, and operating systems.
+
+#### Requirements
+
+1. The web application should support modern browsers such as Chrome, Safari, Edge, and Firefox.
+2. The mobile application should support supported versions of iOS and Android.
+3. The user experience should be responsive across desktop, tablet, and mobile screen sizes.
+4. Emails such as verification and password reset should display correctly in common email clients.
+5. Future payment pages should work properly on both web and mobile.
+
+#### Example
+
+Maria uses Google Chrome on her laptop to manage courses.
+
+Ana uses an iPhone to register and browse classes.
+
+Rico uses an Android phone to log in and view ongoing classes.
+
+---
+
+### 11.14 Mobile App Considerations
+
+The mobile application should focus on a smooth user experience for registration, browsing, dashboard access, and future student-facing features.
+
+#### Requirements
+
+1. Mobile registration should be simple and easy to complete.
+2. Mobile login should support email and password in Phase 1.
+3. Program, course, and class browsing should be mobile-friendly.
+4. Dashboard cards should be readable on small screens.
+5. Long forms should be simplified or split into sections.
+6. Future notifications should support mobile push notifications.
+7. Future payments should support mobile-friendly payment flows.
+
+#### Example
+
+Ana should be able to register, verify email, log in, and browse **Basic Caregiving Batch 2026-A** from her mobile phone without needing to use the web application.
+
+---
+
+### 11.15 Email Delivery
+
+Academiya must send transactional emails for registration verification and password reset.
+
+For Phase 1, email delivery is required because email verification is part of the authentication process.
+
+#### Requirements
+
+1. The system must send verification emails after registration.
+2. The verification email must contain a **"Verify this email"** link.
+3. The system must send password reset emails when requested.
+4. Email links should be secure and time-limited.
+5. Emails should use clear subject lines and user-friendly content.
+6. The system should handle failed email delivery where possible.
+7. Users should be able to request a new verification email if needed.
+
+#### Example
+
+Ana registers and receives an email with the subject:
+
+**"Verify your Academiya email address"**
+
+The email includes a button:
+
+**"Verify this email"**
+
+---
+
+### 11.16 Data Validation
+
+Academiya should validate data before saving it.
+
+Validation should happen on both the user interface and backend where possible.
+
+#### Requirements
+
+1. Required fields must be validated.
+2. Email format must be validated.
+3. Duplicate email registration must be prevented.
+4. Password confirmation must match password.
+5. Class end date must not be earlier than start date.
+6. Capacity must be a positive number.
+7. A course must not be its own prerequisite.
+8. Circular prerequisites should be prevented where possible.
+9. Instructor assignment should only allow users assigned as Instructor.
+10. Draft records should not appear in student-facing browsing pages.
+
+#### Example
+
+Maria tries to create a class with capacity **-5**. The system should reject it and display:
+
+**"Class capacity must be a positive number."**
+
+Another example:
+
+Maria tries to set **Advanced Caregiving** as its own prerequisite. The system should reject it.
+
+---
+
+### 11.17 Data Backup and Recovery
+
+Academiya should protect data from loss.
+
+#### Requirements
+
+1. The system should support regular data backups.
+2. Backup frequency should be defined by the technical team and business requirements.
+3. The system should support recovery from backup when needed.
+4. Backup and recovery procedures should be tested periodically.
+5. Sensitive backup data should be protected.
+
+#### Example
+
+If a system issue causes data loss, the technical team should be able to restore user, program, course, and class data from backup.
+
+---
+
+### 11.18 Logging and Monitoring
+
+Academiya should support logging and monitoring to help detect issues and maintain system health.
+
+#### Requirements
+
+1. System errors should be logged.
+2. Authentication-related issues should be logged where appropriate.
+3. Failed email delivery should be logged or tracked.
+4. Critical business actions should be logged.
+5. Future payment gateway errors must be logged.
+6. Monitoring should alert the technical team when critical services fail.
+
+#### Example
+
+If the email service fails and verification emails are not sent, the issue should be logged and visible to the technical team.
+
+Another example:
+
+In a future phase, if a payment gateway returns a failed transaction, the system should record the failure reason.
+
+---
+
+### 11.19 File Storage Preparation
+
+Learning materials are not included in Phase 1, but the system should be prepared for future file storage needs.
+
+#### Future Requirements
+
+1. The system should support secure file uploads in future phases.
+2. File access should follow role and enrollment permissions.
+3. Supported future file types may include PDF, documents, presentations, and images.
+4. File size limits should be configurable.
+5. Uploaded files should be scanned or validated where possible.
+6. Files should be linked to programs, courses, subjects, classes, or sessions.
+
+#### Example
+
+In a future phase, a Content Manager uploads **Basic Caregiving Module 1.pdf** and links it to **Basic Caregiving**.
+
+Only authorized users or enrolled students should access the file.
+
+---
+
+### 11.20 Payment Security Preparation
+
+Payment Management is not included in Phase 1, but the system should be designed with future payment security in mind.
+
+#### Future Requirements
+
+1. Payment processing should use a trusted payment gateway.
+2. Sensitive payment card data should not be stored directly by Academiya unless compliant with payment regulations.
+3. Payment gateway references should be stored for reconciliation.
+4. Payment reversals and refunds should require authorization.
+5. Payment-related actions should be audited.
+6. Finance reports should be restricted to authorized users only.
+
+#### Example
+
+In a future phase, Ana pays **AED 1,200** online. Academiya should store the transaction reference and payment status, but should not store Ana's full card details.
+
+---
+
+### 11.21 Notification Preparation
+
+Notification & Announcement Management is not included in Phase 1, but the system should be prepared for future communication needs.
+
+#### Future Requirements
+
+1. Class schedule changes should be structured so notifications can be triggered later.
+2. Payment due dates should support future payment reminders.
+3. Certificate issuance should support future certificate notifications.
+4. Users should have notification history in future phases.
+5. Notification target audiences should be based on role, class, course, academy, or payment status.
+
+#### Example
+
+In Phase 1, Maria changes the schedule for **Basic English Batch 2026-B**.
+
+In a future phase, this same type of schedule change should automatically notify affected students and the assigned Instructor.
+
+---
+
+### 11.22 Localization and Time Zone
+
+Academiya may serve academies and users in different locations, so time zone and localization should be considered.
+
+#### Requirements
+
+1. Date and time should be displayed clearly.
+2. Class schedules should store or reference the correct time zone.
+3. The system should support the academy's local time zone.
+4. Currency should be stored clearly where fees are used.
+5. Future multi-country support should consider date format, currency, and language.
+
+#### Example
+
+A class in Dubai should use **Asia/Dubai** time zone.
+
+Example class schedule:
+
+**Basic Caregiving Batch 2026-A - Every Saturday, 9:00 AM to 12:00 PM, Asia/Dubai**
+
+Another example:
+
+Course fee should show currency clearly, such as **AED 1,200**.
+
+---
+
+### 11.23 API and Integration Readiness
+
+Academiya may require integrations in future phases.
+
+#### Future Integration Areas
+
+* Email service
+* Mobile push notification service
+* Payment gateway
+* SMS provider
+* File storage service
+* Certificate verification
+* Reporting or analytics tools
+
+#### Requirements
+
+1. The system should use clean APIs where appropriate.
+2. Integration points should be documented.
+3. Future payment and notification integrations should not require major redesign.
+4. API access should enforce authentication and authorization.
+5. API errors should be handled consistently.
+
+#### Example
+
+Email verification in Phase 1 may use an email delivery service.
+
+In the future, the same architecture may support email announcements, payment reminders, and certificate notifications.
+
+---
+
+### 11.24 Environment and Deployment
+
+Academiya should support proper deployment environments.
+
+#### Recommended Environments
+
+* Development
+* Testing / QA
+* Staging
+* Production
+
+#### Requirements
+
+1. Development should be used by developers.
+2. Testing / QA should be used for functional testing.
+3. Staging should closely match production before release.
+4. Production should be used by real users.
+5. Configuration should be environment-specific.
+6. Test data should not be mixed with production data.
+
+#### Example
+
+Maria's test account should be created in the QA environment during testing.
+
+Real academy users should only use the production environment.
+
+---
+
+### 11.25 Testing Requirements
+
+Academiya should be tested before release.
+
+#### Testing Areas
+
+* Registration testing
+* Email verification testing
+* Login testing
+* Password reset testing
+* Role assignment testing
+* Permission testing
+* Program management testing
+* Course management testing
+* Prerequisite testing
+* Class scheduling testing
+* Dashboard testing
+* Browsing testing
+* Report testing
+* Settings testing
+* Web and mobile compatibility testing
+
+#### Example Test Cases
+
+1. Register with a new email address.
+2. Try to register with duplicate email address.
+3. Click a valid email verification link.
+4. Click an expired verification link.
+5. Log in as Registered User / Potential Student.
+6. Log in as Admin.
+7. Assign Instructor role to a user.
+8. Create Healthcare Program.
+9. Create Basic Caregiving course.
+10. Set Basic Caregiving as prerequisite for Advanced Caregiving.
+11. Schedule Basic Caregiving Batch 2026-A.
+12. Confirm Ana can view the class as Open for Registration.
+13. Confirm Ana cannot access Admin screens.
+
+---
+
+### 11.26 Non-Functional Requirement Summary
+
+Academiya should meet the following non-functional expectations:
+
+1. **Available on web and mobile**
+
+   * Example: Admin uses web, student uses mobile.
+
+2. **Easy to use**
+
+   * Example: Clear forms and messages.
+
+3. **Secure**
+
+   * Example: Passwords are hashed and role access is enforced.
+
+4. **Role-based**
+
+   * Example: Admin sees admin screens, potential student sees browsing screens.
+
+5. **Privacy-conscious**
+
+   * Example: Users only see data they are allowed to see.
+
+6. **Reliable**
+
+   * Example: Important records are saved safely and validated.
+
+7. **Scalable**
+
+   * Example: The system can later support more academies, payments, notifications, and certificates.
+
+8. **Auditable**
+
+   * Example: Role assignment and class status changes are recorded.
+
+9. **Maintainable**
+
+   * Example: Future modules can be added without major redevelopment.
+
+10. **Compatible**
+
+   * Example: Works on modern browsers, iOS, and Android.
+
+11. **Prepared for future modules**
+
+   * Example: Course fees can later connect to online payment; class schedule changes can later trigger notifications.
+
+These non-functional requirements should guide technical architecture, development standards, UI/UX design, testing, deployment, and future enhancement planning.
+
+---
+
+## 12. Assumptions, Dependencies, and Open Questions
+
+This chapter lists the current assumptions, dependencies, and open questions for Academiya.
+
+The purpose of this chapter is to help stakeholders, developers, Systems Analysts, testers, and project managers identify items that may need confirmation before or during implementation.
+
+Some requirements in this document are already clearly defined. Other items may still need business confirmation, technical assessment, budget approval, or phase planning.
+
+---
+
+### 12.1 Assumptions
+
+The following assumptions are currently used for this business requirements document.
+
+---
+
+#### 12.1.1 Academiya Will Be Available as Web and Mobile App
+
+Academiya is assumed to be available as both:
+
+* A web application
+* A mobile application downloadable from the Apple App Store and Google Play Store
+
+The web application is mainly intended for administrators, staff, and instructors. The mobile application is mainly intended for students, instructors, and users who want easier access from mobile devices.
+
+#### Example
+
+Maria uses the web application to create programs, courses, and class schedules.
+
+Ana uses the mobile app to register, log in, and browse available classes.
+
+---
+
+#### 12.1.2 All Users Register Through the Same Registration Process
+
+It is assumed that all users register through the same account registration process.
+
+Users do not register directly as Admin, Instructor, Finance Staff, or other operational roles.
+
+After email verification, a new user becomes a **Registered User / Potential Student** by default.
+
+#### Example
+
+Ana, Juan, Maria, and Liza all register the same way. After verification, each account becomes active. Later, an authorized user assigns Maria as Admin and Juan as Instructor.
+
+---
+
+#### 12.1.3 Phase 1 Uses Email Verification Link Only
+
+It is assumed that Phase 1 will use email verification through a **"Verify this email"** link only.
+
+Phase 1 does not include:
+
+* Mobile OTP
+* SMS OTP
+* Email OTP
+* Social login
+* Multi-factor authentication
+
+#### Example
+
+Ana registers and receives an email with a **"Verify this email"** button. She clicks the button to activate her account.
+
+---
+
+#### 12.1.4 New Verified Users Become Registered Users / Potential Students
+
+It is assumed that every newly verified user will automatically receive Registered User / Potential Student access.
+
+This allows the user to browse visible programs, courses, prerequisites, open classes, ongoing classes, and completed classes.
+
+#### Example
+
+Ana verifies her email. She is not yet enrolled in any class, but she can browse **Healthcare Program** and view **Basic Caregiving Batch 2026-A**.
+
+---
+
+#### 12.1.5 Operational Roles Are Assigned by Authorized Users
+
+It is assumed that Admin, Instructor, and other operational roles are assigned manually by authorized users.
+
+There is no invitation flow in Phase 1 unless added later.
+
+#### Example
+
+Maria searches for Juan using his email address and assigns him as Instructor for **Microsoft Excel for Beginners**.
+
+---
+
+#### 12.1.6 Phase 1 Focuses on Foundation Features
+
+It is assumed that Phase 1 focuses on the foundational modules of Academiya.
+
+Phase 1 includes:
+
+* Registration
+* Email verification
+* Login
+* User management
+* Role assignment
+* Program management
+* Course management
+* Course prerequisite setup
+* Basic class scheduling
+* Browsing
+* Role-based dashboards
+* Basic reports
+* Basic settings
+
+Phase 1 does not include the full student lifecycle.
+
+#### Example
+
+Ana can view that **Basic Caregiving Batch 2026-A** is open for registration. However, the complete admissions, enrollment, payment, attendance, assessment, and certification process may be implemented in later phases.
+
+---
+
+#### 12.1.7 Dashboards Must Use Real Data Only
+
+It is assumed that dashboards will display only real data from implemented Phase 1 modules.
+
+Dashboards should not show dummy data or future-module data that does not exist yet.
+
+#### Example
+
+If Payment Management is not implemented, the dashboard should not show payment revenue.
+
+If Attendance Management is not implemented, the dashboard should not show attendance percentage.
+
+---
+
+#### 12.1.8 Future Modules Should Be Considered in Architecture
+
+It is assumed that the Phase 1 architecture should be designed to support future modules.
+
+Future modules may include:
+
+* Admissions & Enrollment
+* Learning Materials
+* Attendance Management
+* Exam & Assessment Management
+* Certification Management
+* Notification & Announcement Management
+* Payment Management
+* Advanced Reports & Analytics
+
+#### Example
+
+Course fee fields may be captured in Phase 1, but online payment is future. The data structure should allow the fee to connect later to invoices, receipts, installments, and payment transactions.
+
+Another example:
+
+Class schedule changes may not trigger notifications in Phase 1, but the class schedule design should allow notification triggers in the future.
+
+---
+
+### 12.2 Dependencies
+
+The following dependencies may affect the design, implementation, testing, or release of Academiya.
+
+---
+
+#### 12.2.1 Email Delivery Service
+
+Academiya depends on an email delivery service for:
+
+* Email verification
+* Password reset
+* Future announcements
+* Future payment reminders
+* Future certificate notifications
+
+#### Example
+
+If the email service is unavailable, new users may not receive the **"Verify this email"** link and may not be able to activate their accounts.
+
+---
+
+#### 12.2.2 Apple App Store and Google Play Store Approval
+
+Since Academiya will have a mobile application, release depends on app store submission and approval.
+
+#### Example
+
+Even if the mobile app is technically ready, it must still pass Apple App Store and Google Play Store review before users can download it publicly.
+
+---
+
+#### 12.2.3 Hosting and Cloud Infrastructure
+
+Academiya depends on reliable hosting or cloud infrastructure for the web application, backend services, database, file storage, and future integrations.
+
+#### Example
+
+If the hosting environment is unavailable, users may not be able to log in or access programs, courses, and classes.
+
+---
+
+#### 12.2.4 Database Design
+
+Academiya depends on a proper database design that supports Phase 1 and future modules.
+
+The database should support entities such as:
+
+* User
+* Role
+* Permission
+* Academy
+* Program
+* Course
+* Subject
+* Course Prerequisite
+* Class
+* Class Schedule
+* Future Payment
+* Future Notification
+* Future Enrollment
+* Future Certificate
+
+#### Example
+
+If the Course and Class data structures are not designed carefully, adding future online payment or class enrollment may require major redevelopment.
+
+---
+
+#### 12.2.5 Role and Permission Design
+
+Academiya depends on a flexible role and permission structure.
+
+The design should support current roles and future roles without major redevelopment.
+
+#### Example
+
+Finance Staff may not be active in Phase 1, but the system should be able to add Finance Staff later for payment management.
+
+---
+
+#### 12.2.6 Payment Gateway Provider
+
+Payment Management is not included in Phase 1, but future payment features will depend on a selected payment gateway provider.
+
+#### Example
+
+Future online payment may require integration with a payment gateway that supports card payments, payment confirmation, refunds, and transaction references.
+
+---
+
+#### 12.2.7 SMS or Push Notification Provider
+
+SMS and mobile push notifications are not included in Phase 1, but future notifications may depend on external service providers.
+
+#### Example
+
+If Academiya later supports SMS reminders for payment due dates, the system will need an SMS provider.
+
+If Academiya later supports mobile push notifications, the system will need a push notification service.
+
+---
+
+#### 12.2.8 File Storage Service
+
+Learning Materials are not included in Phase 1, but future file uploads will depend on secure file storage.
+
+#### Example
+
+When a Content Manager uploads **Basic Caregiving Module 1.pdf**, the file must be stored securely and accessed only by authorized users.
+
+---
+
+#### 12.2.9 Certificate Template and Verification Design
+
+Certification Management is not included in Phase 1, but future certification features will depend on certificate template design and verification rules.
+
+#### Example
+
+When Ana completes **Basic Caregiving**, the system may generate a certificate with a unique certificate number and verification code.
+
+---
+
+#### 12.2.10 Business Approval for Future Phases
+
+Future modules depend on business approval, budget, timeline, and priority.
+
+#### Example
+
+Payment Management may be prioritized before Certification Management if the academy wants to collect online payments earlier.
+
+---
+
+### 12.3 Open Questions
+
+The following questions should be confirmed before or during implementation.
+
+---
+
+#### 12.3.1 Academy Structure
+
+Will Phase 1 support only one academy, or should it support multiple academies from the beginning?
+
+Options:
+
+* Single academy in Phase 1
+* Multiple academies in Phase 1
+* Single academy now, but database prepared for multiple academies later
+
+#### Example
+
+If Academiya starts with **Filipino Skills Academy Dubai** only, the system may still include Academy ID in the data structure so future branches can be added.
+
+---
+
+#### 12.3.2 Public Browsing Before Registration
+
+Should public visitors be able to browse programs, courses, and classes before registration?
+
+Options:
+
+* Public visitors can only see landing, registration, and login pages
+* Public visitors can browse selected programs and courses
+* Only registered and verified users can browse academy offerings
+
+#### Current Assumption
+
+Only registered and verified users can browse full program, course, and class information in Phase 1.
+
+---
+
+#### 12.3.3 Subject Setup in Phase 1
+
+Should Subject Management be included in Phase 1, or only prepared for future phases?
+
+Options:
+
+* Include Subject Management in Phase 1
+* Prepare data structure only, but do not build screens yet
+* Exclude subjects from Phase 1 and manage only Program -> Course -> Class
+
+#### Example
+
+If Basic Caregiving requires subjects such as **Elderly Care**, **First Aid**, and **Basic Nursing Skills**, Subject Management may be useful in Phase 1.
+
+---
+
+#### 12.3.4 Course Fee Field in Phase 1
+
+Should course or class fee fields be captured in Phase 1 even though online payment is future?
+
+Options:
+
+* Capture course fee only
+* Capture class fee only
+* Capture both course fee and class fee
+* Do not capture fees until Payment Management phase
+
+#### Example
+
+Maria may enter **AED 1,200** as the Basic Caregiving course fee. Later, Payment Management can use this fee for invoice and online payment.
+
+---
+
+#### 12.3.5 Class Registration Button in Phase 1
+
+Should Phase 1 show a **Register for Class** button, or only display class information?
+
+Options:
+
+* Show class information only
+* Show a disabled or coming-soon registration button
+* Allow simple interest registration
+* Allow full class registration in Phase 1
+
+#### Current Assumption
+
+Phase 1 focuses on browsing only. Full class registration, admission, and enrollment are future features.
+
+---
+
+#### 12.3.6 Role Assignment Scope
+
+How detailed should role assignment scope be in Phase 1?
+
+Options:
+
+* Academy-level role assignment only
+* Academy and course-level role assignment
+* Academy, program, course, subject, and class-level role assignment
+
+#### Example
+
+Juan may be assigned as Instructor only for **Microsoft Excel for Beginners**, or specifically for **Excel Batch 2026-A**.
+
+---
+
+#### 12.3.7 Multiple Roles per User
+
+Should one user be allowed to have multiple roles?
+
+Options:
+
+* One role per user
+* Multiple roles per user
+* Multiple roles allowed only within different scopes
+
+#### Example
+
+Liza may be an Instructor for Basic English and also a Content Manager in a future phase.
+
+---
+
+#### 12.3.8 Admin Permission Limits
+
+Can Admin assign only Instructor roles, or can Admin assign other academy-level roles in future?
+
+Options:
+
+* Admin can assign Instructor only
+* Admin can assign Instructor and future staff roles
+* Only Super Admin can assign all roles
+
+#### Example
+
+Maria may be allowed to assign Juan as Instructor but may not be allowed to assign Finance Staff unless Super Admin permits it.
+
+---
+
+#### 12.3.9 Audit Trail Scope in Phase 1
+
+How much audit trail is required in Phase 1?
+
+Options:
+
+* Basic audit fields only, such as created by and updated by
+* Full audit history for role changes and status changes
+* Full audit trail for all important records
+
+#### Example
+
+For Phase 1, the system may record who created and updated courses. A fuller audit trail may be added for payment reversals and certificate issuance in future phases.
+
+---
+
+#### 12.3.10 Basic Reports Required in Phase 1
+
+Which reports are mandatory for Phase 1?
+
+Possible reports:
+
+* Registered user report
+* User role assignment report
+* Program report
+* Course report
+* Course prerequisite report
+* Scheduled class report
+* Class status report
+
+#### Example
+
+The project may decide that Phase 1 must include only User Report, Course Report, and Class Report. Other reports may be added later.
+
+---
+
+#### 12.3.11 Export Function
+
+Should reports support export in Phase 1?
+
+Options:
+
+* No export in Phase 1
+* Export to Excel
+* Export to PDF
+* Export to both Excel and PDF
+
+#### Example
+
+Maria may want to export a list of classes open for registration to Excel.
+
+---
+
+#### 12.3.12 Mobile App Phase 1 Scope
+
+Which features must be available in the mobile app in Phase 1?
+
+Possible mobile features:
+
+* Registration
+* Email verification redirect
+* Login
+* Password reset
+* Registered User / Potential Student dashboard
+* Program browsing
+* Course browsing
+* Class browsing
+* Instructor dashboard
+* Admin dashboard, optional
+
+#### Example
+
+Ana should be able to register and browse classes on mobile. Maria may use the web app for admin-heavy tasks.
+
+---
+
+#### 12.3.13 Web App Phase 1 Scope
+
+Which features must be available in the web app in Phase 1?
+
+Possible web features:
+
+* Login
+* Registration
+* User management
+* Role assignment
+* Program management
+* Course management
+* Prerequisite setup
+* Class scheduling
+* Dashboards
+* Reports
+* Settings
+
+#### Example
+
+Maria should be able to use the web app to create Healthcare Program, Basic Caregiving, and Basic Caregiving Batch 2026-A.
+
+---
+
+#### 12.3.14 Notification Priority
+
+When should Notification & Announcement Management be implemented?
+
+Options:
+
+* Immediately after Phase 1
+* After Admissions & Enrollment
+* After Payment Management
+* Later after core academic modules
+
+#### Example
+
+If the academy frequently changes schedules, notifications may need to be prioritized earlier.
+
+---
+
+#### 12.3.15 Payment Priority
+
+When should Payment Management be implemented?
+
+Options:
+
+* Before Admissions & Enrollment
+* Together with Admissions & Enrollment
+* After Enrollment
+* After Attendance and Certification
+
+#### Example
+
+If students must pay before enrollment confirmation, Payment Management may need to be implemented near the Admissions & Enrollment phase.
+
+---
+
+### 12.4 Risks
+
+The following risks should be considered.
+
+---
+
+#### 12.4.1 Scope Creep
+
+There is a risk that future features may be added into Phase 1 without proper planning.
+
+#### Example
+
+If online payment, attendance, and certification are added into Phase 1, the timeline and development complexity will increase significantly.
+
+#### Mitigation
+
+Keep Phase 1 focused on foundation features and move future features to later phases unless officially approved.
+
+---
+
+#### 12.4.2 Weak Role and Permission Design
+
+If role and permission design is too simple, future roles may be difficult to add.
+
+#### Example
+
+If the system only supports Admin and Student without flexible permissions, adding Finance Staff or Certificate Officer later may require major redevelopment.
+
+#### Mitigation
+
+Design role-based access control with permission and scope from the beginning.
+
+---
+
+#### 12.4.3 Poor Data Structure for Future Modules
+
+If Phase 1 data is not structured carefully, future modules may be difficult to connect.
+
+#### Example
+
+If class data does not have clear Class ID, Course ID, schedule, status, and capacity, future enrollment, attendance, payment, and certification modules may become difficult to build.
+
+#### Mitigation
+
+Use a clean data model with clear relationships between User, Program, Course, Class, and future entities.
+
+---
+
+#### 12.4.4 Email Delivery Problems
+
+If verification emails are delayed or blocked, users may not be able to activate accounts.
+
+#### Example
+
+Ana registers but does not receive the verification email because it goes to spam or the email service fails.
+
+#### Mitigation
+
+Use a reliable email service and provide a resend verification option.
+
+---
+
+#### 12.4.5 App Store Approval Delays
+
+Mobile app release may be delayed by Apple App Store or Google Play Store review.
+
+#### Example
+
+The development team finishes the mobile app, but public release is delayed due to app store review requirements.
+
+#### Mitigation
+
+Prepare app store requirements early and submit for review before the target launch date.
+
+---
+
+#### 12.4.6 Future Payment Complexity
+
+Payment Management can be complex because it involves payment gateways, refunds, reversals, reconciliation, and finance controls.
+
+#### Example
+
+A student accidentally pays twice and requests reversal. The system must handle the correction safely and with audit history.
+
+#### Mitigation
+
+Plan Payment Management carefully and restrict finance-sensitive actions to authorized users.
+
+---
+
+### 12.5 Decisions Required Before Development
+
+Before development begins, the project team should confirm the following decisions:
+
+1. Will Phase 1 support one academy or multiple academies?
+2. Will public visitors see programs before registration?
+3. Will Subject Management be included in Phase 1?
+4. Will course or class fee be captured in Phase 1?
+5. Will Phase 1 include a Register for Class button?
+6. What role assignment scopes are required in Phase 1?
+7. Will users be allowed to have multiple roles?
+8. Which reports are mandatory for Phase 1?
+9. Will report export be included in Phase 1?
+10. What is the exact mobile app scope for Phase 1?
+11. What is the exact web app scope for Phase 1?
+12. How much audit trail is required in Phase 1?
+13. Which future module should be prioritized after Phase 1?
+14. Which email delivery service will be used?
+15. Which hosting or cloud environment will be used?
+16. Which payment gateway may be used in the future?
+17. Which SMS or push notification provider may be used in the future?
+
+---
+
+### 12.6 Final Requirement Note
+
+This business requirements document defines the first complete direction for Academiya.
+
+The document should be treated as a working baseline. It can be refined during:
+
+* UI/UX design
+* Technical architecture design
+* Database design
+* API planning
+* Sprint planning
+* Testing preparation
+* Stakeholder review
+
+Any changes to Phase 1 scope should be reviewed carefully because adding future modules too early may affect timeline, cost, and system complexity.
+
+The recommended approach is to build a strong Phase 1 foundation first, then expand Academiya through future phases such as Admissions & Enrollment, Learning Materials, Attendance, Exams, Certifications, Notifications, Payments, and Advanced Reports.
