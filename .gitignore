@@ -1,0 +1,17 @@
+node_modules/
+.pnpm-store/
+dist/
+build/
+.expo/
+.expo-shared/
+coverage/
+.env
+.env.*
+!.env.example
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.tsbuildinfo
+.DS_Store
+Thumbs.db

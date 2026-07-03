@@ -1,0 +1,19 @@
+{
+  "expo": {
+    "name": "Academiya",
+    "slug": "academiya",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "academiya",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#10231f"
+      }
+    }
+  }
+}
