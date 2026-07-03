@@ -77,14 +77,14 @@ export function App() {
                   <div>
                     <p>{item.program}</p>
                     <h3>{item.course}</h3>
-                    <span>{item.level} · {item.duration} · {item.fee}</span>
+                    <span>{item.level} - {item.duration} - {item.fee}</span>
                   </div>
                   <div className="class-stack">
                     {item.classes.map((classItem) => (
                       <div className="class-row" key={classItem.batch}>
                         <div>
                           <strong>{classItem.batch}</strong>
-                          <span>{classItem.schedule} · {classItem.deliveryMode}</span>
+                          <span>{classItem.schedule} - {classItem.deliveryMode}</span>
                         </div>
                         <span className={`status ${statusTone[classItem.status]}`}>{classItem.status}</span>
                       </div>

@@ -7,6 +7,11 @@
     "userInterfaceStyle": "light",
     "scheme": "academiya",
     "assetBundlePatterns": ["**/*"],
+    "splash": {
+      "image": "../../assets/brand/academiya-logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "ios": {
       "supportsTablet": true
     },

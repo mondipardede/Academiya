@@ -8,6 +8,7 @@ Academiya is initialized as a TypeScript monorepo.
 - `apps/mobile` - Expo React Native mobile application.
 - `packages/domain` - Shared domain constants and early data contracts for roles, statuses, and discovery cards.
 - `assets/brand` - Shared Academiya logo and brand assets used by web and mobile.
+- `docs/gui-design-guide.md` - Shared GUI direction for the mobile and web experience.
 
 ## Commands
 
