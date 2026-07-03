@@ -7,6 +7,7 @@
   "scripts": {
     "dev:web": "pnpm --filter @academiya/web dev",
     "dev:mobile": "pnpm --filter @academiya/mobile start",
+    "build:web": "pnpm --filter @academiya/web build",
     "build": "pnpm -r build",
     "check": "pnpm -r check",
     "lint": "pnpm -r lint"

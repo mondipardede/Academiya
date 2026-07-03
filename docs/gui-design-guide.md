@@ -19,9 +19,57 @@ The design should feel:
 
 Use the selected logo direction: **Open Book "A" + Star**.
 
+## Visual Reference
+
+The current visual reference is stored at:
+
+[assets/design/academiya-look-and-feel-reference.png](../assets/design/academiya-look-and-feel-reference.png)
+
+The login page reference is stored at:
+
+[assets/design/academiya-login-reference.png](../assets/design/academiya-login-reference.png)
+
+The post-login new-user landing page reference is stored at:
+
+[assets/design/academiya-post-login-home-reference.png](../assets/design/academiya-post-login-home-reference.png)
+
+The post-login registered-student landing page reference is stored at:
+
+[assets/design/academiya-registered-student-home-reference.png](../assets/design/academiya-registered-student-home-reference.png)
+
+The post-login instructor landing page reference is stored at:
+
+[assets/design/academiya-instructor-home-reference.png](../assets/design/academiya-instructor-home-reference.png)
+
+The post-login admin landing page reference is stored at:
+
+[assets/design/academiya-admin-home-reference.png](../assets/design/academiya-admin-home-reference.png)
+
+The reference shows the preferred app personality:
+
+* White and light-gray mobile surfaces
+* Deep blue splash/header areas
+* Gold highlights for optimism and success
+* Simple bottom navigation
+* Rounded cards with subtle borders and shadows
+* Friendly learner-focused copy
+* Icon themes for Community, Learning, Growth, and Success
+
 ## 1. Color Palette
 
 Use colors inspired by the Academiya logo and Filipino identity.
+
+Recommended palette from the look-and-feel reference:
+
+| Color | Hex | Usage |
+| --- | --- | --- |
+| Deep Blue | `#0047A1` | Headers, splash screen, primary buttons, active navigation, important titles |
+| Blue | `#1976D2` | Secondary accents, links, selected states, informational icons |
+| Gold | `#F4B400` | Highlights, stars, progress accents, success emphasis, call-to-action accents |
+| Green | `#2EA745` | Growth, completed status, verification, success messages |
+| Light Gray | `#F5F6F8` | App background, subtle surfaces, page background |
+| White | `#FFFFFF` | Cards, forms, reading areas |
+| Text Navy | `#071B45` | Main text and headings |
 
 **Deep Blue** is the primary color. Use it for headers, main buttons, active navigation, and important titles. It represents trust, knowledge, and professionalism.
 
@@ -117,21 +165,34 @@ Button:
 
 ## 7. Login Screen
 
-Simple and clean.
+The login screen should feel clean, welcoming, and strongly branded.
+
+Reference layout:
+
+* White or very light background
+* Pale Filipino sun / skyline-inspired background accents
+* Academiya logo centered near the top
+* Tagline below the logo: **Learn Today. Grow Everyday. Succeed Tomorrow.**
+* Main heading: **Welcome Back!**
+* Supporting text: **Please log in to your account to continue.**
 
 Fields:
 
-* Email Address
+* User ID
 * Password
 
 Buttons:
 
-* **Login**
-* **Forgot Password?**
+* **Log In**
+* **Create New Account**
 
-Footer:
+Additional controls:
 
-**Don't have an account? Create Account**
+* Remember me checkbox
+* **Forgot Password?** link
+* Divider with **OR**
+* New-user information card
+* Bottom blue and gold wave accent
 
 Important message for unverified users:
 
@@ -141,15 +202,19 @@ Important message for unverified users:
 
 This is the most important mobile screen for Phase 1.
 
+Use the post-login new-user landing page reference as the target look and feel.
+
 Suggested sections:
 
-* Header: **Hello, Ana** and **Ready to grow your skills today?**
-* Search bar: **Search programs, courses, or classes**
-* Quick cards: Available Programs, Courses, Open Classes, Ongoing Classes
+* Deep blue branded hero with logo, notification icon, and profile image/avatar
+* Header text: **Hello, Ana!** and **Ready to grow your skills today?**
+* Large search bar with a separate filter button
+* Quick cards: Programs, Courses, Open Classes, Ongoing Classes
 * Featured Programs: Healthcare Program, Language Program, Computer Skills Program
 * Classes Open for Registration
 * Ongoing Classes
 * Completed Classes
+* Bottom navigation with **Home**, **Programs**, **Classes**, **My Calendar**, and **Profile**
 
 Example class card:
 
@@ -158,6 +223,26 @@ Every Saturday - 9:00 AM - 12:00 PM
 Onsite - Dubai Campus  
 Status: **Open for Registration**  
 Button: **View Class**
+
+## 8.1 Registered Student Home Screen
+
+After a user becomes an enrolled/registered student, the landing page should shift from discovery-first to progress-first.
+
+Use the registered-student home reference as the target look and feel.
+
+Suggested sections:
+
+* Deep blue branded hero with logo, notification icon, profile image/avatar, and Filipino sun/star accents
+* Header text: **Hello, Ana!** and **Welcome back - continue your learning journey.**
+* Large search bar with a separate filter button
+* Quick cards: **My Programs**, **My Classes**, **Upcoming**, **Completed**
+* **My Enrolled Classes** with progress bars and instructor/class metadata
+* **Upcoming Sessions** with date, time, topic, delivery mode, and status badge
+* **Recommended Programs for You**
+* **Learning Progress** summary with overall progress, classes enrolled, classes completed, and certificates earned
+* Bottom navigation with **Home**, **Programs**, **Classes**, **Calendar**, and **Profile**
+
+The registered-student screen should not show payment, attendance, assessment, or certificate actions until those modules are implemented.
 
 ## 9. Program List Screen
 
@@ -250,12 +335,25 @@ Since full enrollment is not included in Phase 1, avoid showing a working paymen
 
 For Instructor users, the app should focus on assigned teaching activities.
 
+Use the instructor home reference as the target look and feel.
+
 Header:
 
 **Hello, Juan**  
-**Here are your assigned classes**
+**Welcome back - here are your assigned classes and schedule.**
 
-Cards:
+Suggested sections:
+
+* Deep blue branded hero with logo, notification icon, profile image/avatar, and Filipino sun/star accents
+* Search bar for **classes or schedules** with filter button
+* Quick cards: **Assigned Courses**, **My Classes**, **Today's Sessions**, **Ongoing**
+* **My Assigned Classes** with course category, date range, online/location metadata, and progress
+* **Today's Schedule** with session time, class, topic, mode, and **Today** badge
+* **Teaching Summary** with courses assigned, active classes, students, and sessions this month
+* **Upcoming Classes (Next 7 Days)** with date, topic, time, and **Upcoming** badge
+* Bottom navigation with **Home**, **My Classes**, **Schedule**, **Programs**, and **Profile**
+
+Example assigned class card:
 
 **Microsoft Excel for Beginners**  
 Excel Batch 2026-A  
@@ -275,6 +373,26 @@ Future buttons can be added later:
 * View Students
 
 These future buttons should not appear in Phase 1 unless implemented.
+
+## 12.1 Admin Dashboard
+
+For Admin users, the app should provide a compact academy operations overview. Heavy management work is still better on the web application, but mobile should allow Admin users to quickly monitor the academy.
+
+Use the admin home reference as the target look and feel.
+
+Suggested sections:
+
+* Deep purple/blue branded hero with logo, notification icon, profile image/avatar, and greeting
+* Header text: **Hello, Admin!** and **Here's an overview of your academy.**
+* **Overview** card with time filter such as **This Month**
+* KPI cards for **Total Users**, **Instructors**, **Active Classes**, and **Programs**
+* **Recent Activities** list with timestamp and activity type
+* **Quick Access** grid for User Management, Program Management, Course Management, Class Management, Schedule Management, and Reports
+* **Reports Snapshot** with compact progress bars
+* **System Announcements** card
+* Bottom navigation with **Dashboard**, **Users**, **Classes**, **Reports**, and **More**
+
+Admin mobile should prioritize monitoring and shortcuts. Detailed create/edit workflows can open simplified forms or be directed to the web application if too complex for mobile.
 
 ## 13. Profile Screen
 
