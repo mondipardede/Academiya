@@ -6,6 +6,8 @@ import {
   CalendarDays,
   ChevronRight,
   ClipboardList,
+  Eye,
+  EyeOff,
   FileBarChart,
   GraduationCap,
   LayoutDashboard,
@@ -562,6 +564,8 @@ function LoginPage({
   onInstructor: () => void;
   onAdmin: () => void;
 }) {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <main className="login-page">
       <section className="phone-card login-card">
@@ -584,7 +588,18 @@ function LoginPage({
         </label>
         <label className="field">
           <span>Password</span>
-          <input type="password" placeholder="Enter your password" />
+          <div className="password-input-wrap">
+            <input type={showPassword ? "text" : "password"} placeholder="Enter your password" />
+            <button
+              type="button"
+              className="password-toggle"
+              onClick={() => setShowPassword((current) => !current)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-pressed={showPassword}
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
         </label>
 
         <div className="login-options">
