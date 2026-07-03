@@ -375,7 +375,8 @@ button {
 }
 
 .icon-button,
-.profile-chip {
+.profile-chip,
+.return-login-button {
   display: inline-flex;
   min-height: 42px;
   align-items: center;
@@ -386,6 +387,11 @@ button {
   color: #071b45;
   padding: 0 14px;
   font-weight: 800;
+}
+
+.return-login-button {
+  border-color: #f4ba40;
+  color: #0047a1;
 }
 
 .dashboard-stack {
@@ -730,6 +736,12 @@ button {
 
   .topbar-actions {
     width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .return-login-button {
+    flex: 1 1 100%;
+    justify-content: center;
   }
 
   .profile-chip {

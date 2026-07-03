@@ -246,6 +246,13 @@ export function App() {
     setToast("This is a prototype. Please select one of the demo access options.");
   };
 
+  const returnToLogin = () => {
+    setRole("login");
+    setView("login");
+    setToast("Returned to the user login page.");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const submitRegistration = () => {
     setRegistrationName("New Learner");
     setView("verify");
@@ -377,7 +384,11 @@ export function App() {
   if (view === "verify") {
     return (
       <PrototypeFrame toast={toast} setToast={setToast}>
-        <VerificationPage onVerify={verifyEmail} onBack={() => go("register", "login")} />
+        <VerificationPage
+          onVerify={verifyEmail}
+          onBack={() => go("register", "login")}
+          onLogin={() => go("login", "login")}
+        />
       </PrototypeFrame>
     );
   }
@@ -393,6 +404,9 @@ export function App() {
               <h1>{titleFor(view, role)}</h1>
             </div>
             <div className="topbar-actions">
+              <button type="button" className="return-login-button" onClick={returnToLogin}>
+                Return to Login
+              </button>
               <button type="button" className="icon-button" onClick={phaseOneToast} aria-label="Notifications">
                 <Bell size={18} />
               </button>
@@ -633,7 +647,15 @@ function RegistrationPage({
   );
 }
 
-function VerificationPage({ onVerify, onBack }: { onVerify: () => void; onBack: () => void }) {
+function VerificationPage({
+  onVerify,
+  onBack,
+  onLogin
+}: {
+  onVerify: () => void;
+  onBack: () => void;
+  onLogin: () => void;
+}) {
   return (
     <main className="login-page">
       <section className="phone-card center-card">
@@ -642,6 +664,7 @@ function VerificationPage({ onVerify, onBack }: { onVerify: () => void; onBack: 
         <p>A verification email has been sent. Please click "Verify this email" to continue.</p>
         <button type="button" className="primary-button" onClick={onVerify}>Verify this email</button>
         <button type="button" className="secondary-button" onClick={onBack}>Back to registration</button>
+        <button type="button" className="link-button" onClick={onLogin}>Back to login</button>
       </section>
     </main>
   );
@@ -704,7 +727,7 @@ function SideNav({
           </button>
         ))}
       </nav>
-      <button type="button" className="logout-button" onClick={() => go("login", "login")}>Back to demo login</button>
+      <button type="button" className="logout-button" onClick={() => go("login", "login")}>Back to login</button>
     </aside>
   );
 }
